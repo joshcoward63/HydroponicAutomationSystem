@@ -1,9 +1,3 @@
- /*********
-  Rui Santos
-  Complete project details at https://RandomNerdTutorials.com  
-*********/
-
-// Import required libraries
 #ifdef ESP32
   #include <WiFi.h>
   #include <ESPAsyncWebServer.h>
@@ -46,6 +40,16 @@ const char* password = "621124665614";
 
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
+
+
+// Set your Static IP address
+IPAddress local_IP(192, 168, 1,185;
+// Set your Gateway IP address
+IPAddress gateway(192, 168, 1, 1);
+
+IPAddress subnet(255, 255, 0, 0);
+IPAddress primaryDNS(8, 8, 8, 8); // optional
+IPAddress secondaryDNS(8, 8, 4, 4); // optional
 
 String readDSTemperatureC(int num) {
   // Call sensors.requestTemperatures() to issue a global temperature and Requests to all devices on the bus
