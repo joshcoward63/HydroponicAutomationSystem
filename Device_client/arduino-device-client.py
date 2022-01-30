@@ -40,7 +40,7 @@ def sendWaterTemp():
 @sio.on("getAreaTemp")
 def sendAreaTemp():
     areaTemp = getSurroundingAreaTemp()
-    sio.emit("growAreaTemp", areaTemp)
+    sio.emit("areaTemp", areaTemp)
 
 # When the socket connects    
 @sio.event
