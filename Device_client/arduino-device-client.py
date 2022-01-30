@@ -1,5 +1,6 @@
 
 """This Client connects directly to Misty and relays commands between Misty and Nodejs server"""
+from Device_client.esp_server_controller import getGrowRoomTemp, getSurroundingAreaTemp, getWaterTemp
 import socketio
 import requests
 import json
@@ -15,32 +16,31 @@ import io
 from collections import deque
 import numpy as np
 import selenium
-
+import esp_server_controller
 
 #Creates the client
 sio = socketio.Client()
-
-
-
 
 server_ip = "http://" + "192.168.0.214" + ":" +"5000"
 #Connects to server
 sio.connect(server_ip)
 
+#Gets the temperature reading of the grow room
+@sio.on("getRoomTemp")
+def sendRoomTemp():
+    roomTemp = getGrowRoomTemp()
+    sio.emit("growRoomTemp", roomTemp)
 
-#Recieves text and converts it to speech for Misty
-@sio.on("text")
-def textToSpeech(text):
-    global robot
-    print(text)
-    robot.say(text)
+#Gets the temperature reading of the water in the system
+def sendWaterTemp():
+    waterTemp = getWaterTemp()
+    sio.emit("waterTemp", waterTemp)
 
-#Sends Individual Robot info
-@sio.on("robotInfo")
-def message4(sid):
-    info = {"SID": sid, "Name": name, "IP": robot_ip}
-    print(info)
-    sio.emit("getInfo", info)
+#Gets the temperature reading of the surrounding area
+@sio.on("getAreaTemp")
+def sendAreaTemp():
+    areaTemp = getSurroundingAreaTemp()
+    sio.emit("growAreaTemp", areaTemp)
 
 # When the socket connects    
 @sio.event
