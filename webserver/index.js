@@ -23,7 +23,7 @@ io.sockets.on('connection', newConnection);
  function newConnection(socket){
  	console.log("new connection: " + socket.id);
 	//   io.to(socket.id).emit("robotInfo", socket.id);
-	//   socket.emit("robotInfoBrowser", robots, robotCount);
+	  socket.emit("getAreaTemp");
 	//   clients[socket.id] = null;
 	//   console.log(JSON.stringify(clients))
 
@@ -41,6 +41,16 @@ io.sockets.on('connection', newConnection);
 	    socket.broadcast.emit("robotDisconnect", robotNumber);
 		delete robots[robotNumber];		
 	
+	})
+
+	socket.on("growRoomTemp", function(temperature){
+		console.log(temperature);
+	})
+	socket.on("waterTemp", function(temperature){
+		console.log(temperature);
+	})
+	socket.on("areaTemp", function(temperature){
+		console.log(temperature);
 	})
 
 }
