@@ -9,16 +9,28 @@ import time
 
 op = webdriver.ChromeOptions()
 op.add_argument('headless') #Note this line keeps browser from opening
-driver = webdriver.Chrome(options=op)
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=op)
+# driver = webdriver.Chrome(options=op)
 
 def turn_pump_on(pump, duration):
     pass
 
 def getWaterTemp():
-    pass
+    driver.get("http://192.168.0.214/")
+    waterTemp = driver.find_element_by_xpath("//*[@id='temperaturef3']")
+    waterTemp = waterTemp.text
+    return waterTemp
 
 def getGrowRoomTemp():
-    pass
+    driver.get("http://192.168.0.214/")
+    roomTemp = driver.find_element_by_xpath("//*[@id='temperaturef1']")
+    roomTemp = roomTemp.text
+    return roomTemp
+
 
 def getSurroundingAreaTemp():
-    pass
+    driver.get("http://192.168.0.214/")
+    areaTemp = driver.find_element_by_xpath("//*[@id='temperaturef2']")
+    areaTemp = areaTemp.text
+    return areaTemp
+
