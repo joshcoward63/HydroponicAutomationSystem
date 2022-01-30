@@ -1,27 +1,25 @@
 
-"""This Client connects directly to Misty and relays commands between Misty and Nodejs server"""
-from Device_client.esp_server_controller import getGrowRoomTemp, getSurroundingAreaTemp, getWaterTemp
 import socketio
-import requests
-import json
-import threading
-import time
-from PIL import Image
-from MistyAPI import Robot
-from io import BytesIO
-import base64
-import av
-from PIL import Image
-import io
-from collections import deque
-import numpy as np
-import selenium
-import esp_server_controller
+# import requests
+# import json
+# import threading
+# import time
+# from PIL import Image
+# from MistyAPI import Robot
+# from io import BytesIO
+# import base64
+# import av
+# from PIL import Image
+# import io
+# from collections import deque
+# import numpy as np
+# import selenium
+from esp_server_controller import getGrowRoomTemp, getSurroundingAreaTemp,  getWaterTemp
 
 #Creates the client
 sio = socketio.Client()
 
-server_ip = "http://" + "192.168.0.214" + ":" +"5000"
+server_ip = "http://" + "192.168.0.91" + ":" +"5000"
 #Connects to server
 sio.connect(server_ip)
 
