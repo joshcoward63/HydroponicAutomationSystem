@@ -18,6 +18,6 @@ The biggest benefits seen in using hydroponics over traditional methods are the 
     </br>
  ### Problem Statement
 
-With hydroponics there is a lot of monitoring and user interaction that is required to successfully grow plants. Things like measuring pH, water temperature, room temperature, electrical conductivity (EC) of the water (nutrient concentration) , humidity and a lot more. All of which as of now have to be measured and adjusted by hand. This takes time out of one's day to do and requires the individual in charge of the hydroponic system to always have to be within the area in order to make changes when needed. Not to mention through human interaction we introduce a high potential for errors to occur. This can potentially cause devistating effects on the plants which can offen be unreversable.
+With hydroponics there is a lot of monitoring and user interaction that is required to successfully grow plants.</br> Things like measuring pH, water temperature, room temperature, electrical conductivity (EC) of the water (nutrient concentration) , humidity and a lot more. All of which as of now have to be measured and adjusted by hand. This takes time out of one's day to do and requires the individual in charge of the hydroponic system to always have to be within the area in order to make changes when needed. Not to mention through human interaction we introduce a high potential for errors to occur. This can potentially cause devistating effects on the plants which can offen be unreversable.
 
 ### Solution
