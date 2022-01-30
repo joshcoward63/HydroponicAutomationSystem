@@ -5,7 +5,7 @@
 A big hobby of mine that I have recently gotten into is hydroponics, growing plants in a soilless medium, in my particular case I’m growing plants directly in water. 
 
 Hydroponics offers both the home gardener and large scale farmer numerous benefits when compared to growing crops/plants using traditional methods.
-The biggest benefits seen in using hydroponics over traditional methods are the following:
+The biggest benefits seen in using hydroponics over traditional methods are the following:</br>
     - Uses up to 98% less water
     - When combined with vertcial farming techniques can use up to 99% less space to grow plants
     - Plants can grow over 50% faster
