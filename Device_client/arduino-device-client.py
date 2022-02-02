@@ -16,6 +16,7 @@ import socketio
 # import selenium
 from esp_server_controller import getGrowRoomTemp, getSurroundingAreaTemp,  getWaterTemp
 
+
 #Creates the client
 sio = socketio.Client()
 
@@ -30,6 +31,7 @@ def sendRoomTemp():
     sio.emit("growRoomTemp", roomTemp)
 
 #Gets the temperature reading of the water in the system
+@sio.on("getWaterTemp")
 def sendWaterTemp():
     waterTemp = getWaterTemp()
     sio.emit("waterTemp", waterTemp)

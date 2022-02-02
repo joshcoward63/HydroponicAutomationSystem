@@ -23,17 +23,27 @@ io.sockets.on('connection', newConnection);
  function newConnection(socket){
  	console.log("new connection: " + socket.id);
 	//   io.to(socket.id).emit("robotInfo", socket.id);
-	  socket.emit("getAreaTemp");
 	//   clients[socket.id] = null;
 	//   console.log(JSON.stringify(clients))
 
-	socket.on("getInfo", function getInfo(info){
-		// robotCount++;
-		// info = JSON.stringify(info);
-		// clients[socket.id] = info;
-		// robots[robotCount] = JSON.parse(info);
-		// socket.broadcast.emit("robotInfoBrowser", robots, robotCount);
-		// socket.broadcast.emit("getInfo", info);
+	socket.on("getAreaTemp", function getAreaTemp(temp){
+
+	})
+	socket.on("getWaterTemp", function getGrowRoomTemp(temp){
+
+	})
+	socket.on("getRoomTemp", function getWaterTemp(temp){
+
+	})
+
+	socket.on("areaTemp", function postAreaTemp(temp){
+
+	})
+	socket.on("waterTemp", function postGrowRoomTemp(temp){
+
+	})
+	socket.on("growRoomTemp", function postWaterTemp(temp){
+
 	})
 
 	
@@ -43,14 +53,5 @@ io.sockets.on('connection', newConnection);
 	
 	})
 
-	socket.on("growRoomTemp", function(temperature){
-		console.log(temperature);
-	})
-	socket.on("waterTemp", function(temperature){
-		console.log(temperature);
-	})
-	socket.on("areaTemp", function(temperature){
-		console.log(temperature);
-	})
 
 }
