@@ -27,17 +27,24 @@ io.sockets.on('connection', newConnection);
 	//   console.log(JSON.stringify(clients))
 
 	socket.on("getAreaTemp", function getAreaTemp(temp){
-		console.log(temp);
+		// console.log(temp);
 		socket.broadcast.emit("areaTemp",temp);
 	});
 
 	socket.on("getWaterTemp", function getGrowRoomTemp(temp){
-
+		socket.broadcast.emit("waterTemp",temp);
 	});
 	socket.on("getRoomTemp", function getWaterTemp(temp){
-
+		socket.broadcast.emit("roomTemp",temp);
 	});
-
+	
+	socket.on("getTempReadings", function getWaterTemp(temps){
+		let aTemp = temps[0];
+		let rTemp = temps[1];
+		let wTemp = temps[2];
+		socket.broadcast.emit("temperatureReadings",aTemp, rTemp, wTemp);	
+		console.log(aTemp);
+	});
 	// socket.on("areaTemp", function postAreaTemp(temp){
 
 	// })

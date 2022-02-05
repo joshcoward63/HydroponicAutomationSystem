@@ -1,42 +1,30 @@
 import client from '../context/socket'
 import React, {useState} from 'react';
-// import './guage.scss';
-// import './guage.js';
-// import GaugeChart from 'react-gauge-chart'
-// import Speedometer from "svelte-speedometer"
-// import SimpleGuageChart from 'simple-react-d3-guage-chart'
-// import 'simple-react-d3-guage-chart/dist/index.css'
 import ReactSpeedometer from "react-d3-speedometer"
-// const [areaTemp, getTemp] = useState( new getRandomArbitrary());
-
-// client.on("areaTemp", function postAreaTemp(temp){
-//   console.log("Temperature: ", temp);
-// });
-let areaTemp = 30;
-var growRoomTemp;
-var waterTemp;
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-// useEffect(() => {
-//   var timerID = setInterval(() => tick(), 1000);
-//   return () => clearInterval(timerID);
-// });
-
-// function getTemp(){
-//  areaTemp = getRandomArbitrary(60, 80);
-//  setTimeout(() => {
-//    getTemp();
-//  }, 1000);
-// }
-
-function tick(){
-  getTemp(getRandomArbitrary());
-}
 
 
 const Home = () => {
+ 
+  const [areaTemp, getAreaTemp] = useState(null); 
+  const [growRoomTemp, getGrowRoomTemp] = useState(null); 
+  const [waterTemp, getWaterTemp] = useState(null); 
+
+  client.on("temperatureReadings", function(aTemp, rTemp, wTemp ){   
+    console.log(aTemp); 
+    getAreaTemp(aTemp);
+    getGrowRoomTemp(rTemp);
+    getWaterTemp(wTemp);
+  });
+  client.on("areaTemp", function (aTemp){   
+    console.log(aTemp); 
+    getAreaTemp(aTemp);
+  });
+  client.on("waterTemp", function (wTemp){   
+    getWaterTemp(wTemp);
+  });
+  client.on("roomTemp", function ( rTemp ){   
+    getGrowRoomTemp(wTemp);
+  });
   return (
     
     <div
@@ -71,6 +59,7 @@ const Home = () => {
         segments={5555}
         value={areaTemp}
         // textColor={"white"}
+        
       />
       {/* <h1>Room Temp</h1> */}
       </div>
@@ -92,7 +81,7 @@ const Home = () => {
         startColor ={"red"}
         endColor={"green"}
         segments={5555}
-        value={72}
+        value={waterTemp}
         // textColor={textColor}
       />
       </div>
@@ -115,7 +104,7 @@ const Home = () => {
               startColor ={"red"}
               endColor={"green"}
               segments={5555}
-              value={72}
+              value={growRoomTemp}
               // textColor={textColor}
             />
 

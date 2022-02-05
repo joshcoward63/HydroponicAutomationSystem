@@ -45,8 +45,24 @@ def sendAreaTemp():
 
 def sendAreaTemp2():
     areaTemp = getSurroundingAreaTemp()
-    print(areaTemp)
+    # print(areaTemp)
     sio.emit("getAreaTemp", areaTemp)
+
+def sendRoomTemp2():
+    roomTemp = getGrowRoomTemp()
+    sio.emit("growRoomTemp", roomTemp)
+
+
+def sendWaterTemp2():
+    waterTemp = getWaterTemp()
+    sio.emit("waterTemp", waterTemp)", areaTemp)
+
+def sendTemperatureReadings():
+    areaTemp = getSurroundingAreaTemp()
+    roomTemp = getGrowRoomTemp()
+    waterTemp = getWaterTemp()
+    # print(areaTemp)
+    sio.emit("getTempReadings", [areaTemp, roomTemp, waterTemp])
 
 # When the socket connects    
 @sio.event
@@ -65,6 +81,11 @@ def disconnect():
 
 if __name__ == '__main__':
     while True:
+        # sendTemperatureReadings()
         sendAreaTemp2()
-        time.sleep(30)
+        sendRoomTemp2()
+        sendWaterTemp2()
+        print("sent")
+        time.sleep(5)
+        
         
