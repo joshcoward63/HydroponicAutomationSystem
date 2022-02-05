@@ -16,21 +16,30 @@ def turn_pump_on(pump, duration):
     pass
 
 def getWaterTemp():
-    driver.get("http://192.168.0.214/")
-    waterTemp = driver.find_element_by_xpath("//*[@id='temperaturef3']")
-    waterTemp = waterTemp.text
+    try:
+        driver.get("http://192.168.0.214/")
+        waterTemp = driver.find_element_by_xpath("//*[@id='temperaturef3']")
+        waterTemp = waterTemp.text
+    except:
+        waterTemp = "000"
     return waterTemp
 
 def getGrowRoomTemp():
-    driver.get("http://192.168.0.214/")
-    roomTemp = driver.find_element_by_xpath("//*[@id='temperaturef1']")
-    roomTemp = roomTemp.text
+    try:
+        driver.get("http://192.168.0.214/")
+        roomTemp = driver.find_element_by_xpath("//*[@id='temperaturef1']")
+        roomTemp = roomTemp.text
+    except:
+        roomTemp = "000"
     return roomTemp
 
 
 def getSurroundingAreaTemp():
-    driver.get("http://192.168.0.214/")
-    areaTemp = driver.find_element_by_xpath("//*[@id='temperaturef2']")
-    areaTemp = areaTemp.text
+    try:
+        driver.get("http://192.168.0.214/")
+        areaTemp = driver.find_element_by_xpath("//*[@id='temperaturef2']")
+        areaTemp = areaTemp.text
+    except:
+        areaTemp = "000"
     return areaTemp
 

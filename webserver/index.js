@@ -27,29 +27,31 @@ io.sockets.on('connection', newConnection);
 	//   console.log(JSON.stringify(clients))
 
 	socket.on("getAreaTemp", function getAreaTemp(temp){
+		console.log(temp);
+		socket.broadcast.emit("areaTemp",temp);
+	});
 
-	})
 	socket.on("getWaterTemp", function getGrowRoomTemp(temp){
 
-	})
+	});
 	socket.on("getRoomTemp", function getWaterTemp(temp){
 
-	})
+	});
 
-	socket.on("areaTemp", function postAreaTemp(temp){
+	// socket.on("areaTemp", function postAreaTemp(temp){
 
-	})
-	socket.on("waterTemp", function postGrowRoomTemp(temp){
+	// })
+	// socket.on("waterTemp", function postGrowRoomTemp(temp){
 
-	})
-	socket.on("growRoomTemp", function postWaterTemp(temp){
+	// })
+	// socket.on("growRoomTemp", function postWaterTemp(temp){
 
-	})
+	// })
 
 	
 	socket.on('disconnecting', function(){	
-	    socket.broadcast.emit("robotDisconnect", robotNumber);
-		delete robots[robotNumber];		
+	    // socket.broadcast.emit("Client disconnected");
+		console.log("client disconnected: ", socket.id);
 	
 	})
 

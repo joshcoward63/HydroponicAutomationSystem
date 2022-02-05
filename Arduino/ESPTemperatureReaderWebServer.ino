@@ -1,3 +1,9 @@
+ /*********
+  Rui Santos
+  Complete project details at https://RandomNerdTutorials.com  
+*********/
+
+// Import required libraries
 #ifdef ESP32
   #include <WiFi.h>
   #include <ESPAsyncWebServer.h>
@@ -12,7 +18,7 @@
 #include <DallasTemperature.h>
 
 // Data wire is connected to GPIO 2
-#define ONE_WIRE_BUS 2
+#define ONE_WIRE_BUS 15
 
 // Setup a oneWire instance to communicate with any OneWire devices
 OneWire oneWire(ONE_WIRE_BUS);
@@ -20,15 +26,14 @@ OneWire oneWire(ONE_WIRE_BUS);
 // Pass our oneWire reference to Dallas Temperature sensor 
 DallasTemperature sensors(&oneWire);
 
-DeviceAddress sensor1 = { 0x28, 0xFF, 0x24, 0xE, 0xA0, 0x16, 0x3, 0xE8 };
+DeviceAddress sensor1 = { 0x28, 0xFF, 0x38, 0x5E, 0xA3, 0x16, 0x5, 0x54 };
 DeviceAddress sensor2 = { 0x28, 0xFF, 0xE4, 0xC, 0xA0, 0x16, 0x3, 0xCD };
-DeviceAddress sensor3= { 0x28, 0xFF, 0x79, 0x9, 0xA0, 0x16, 0x3, 0x17 };
+DeviceAddress sensor3= { 0x28, 0xFF, 0x45, 0xB, 0xA0, 0x16, 0x3, 0xB5 };
 
 // Variables to store temperature values
 String temperatureF1 = "";
 String temperatureF2 = "";
 String temperatureF3 = "";
-String temperatureC1 = "";
 
 // Timer variables
 unsigned long lastTime = 0;  
@@ -40,67 +45,35 @@ const char* password = "621124665614";
 
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
-
-
 // Set your Static IP address
-IPAddress local_IP(192, 168, 1,185;
+IPAddress local_IP(192, 168, 1, 184);
 // Set your Gateway IP address
 IPAddress gateway(192, 168, 1, 1);
 
 IPAddress subnet(255, 255, 0, 0);
-IPAddress primaryDNS(8, 8, 8, 8); // optional
-IPAddress secondaryDNS(8, 8, 4, 4); // optional
+IPAddress primaryDNS(8, 8, 8, 8);   //optional
+IPAddress secondaryDNS(8, 8, 4, 4); //optional
 
-String readDSTemperatureC(int num) {
+float readDSTemperatureF(int id) {
   // Call sensors.requestTemperatures() to issue a global temperature and Requests to all devices on the bus
   sensors.requestTemperatures(); 
-  float tempC = NULL;
-  if(num == 1){
-    tempC = sensors.getTempC(sensor1);
+  float temp;
+  if(id == 1){      
+    temp =sensors.getTempF(sensor1);
+    Serial.print(" Sensor 1(*F): ");
+    Serial.println(sensors.getTempF(sensor1));
   }
-  else if(num == 2){
-    tempC = sensors.getTempC(sensor2);
-  }
-  else{
-    tempC = sensors.getTempC(sensor3);
-  }
-  
-  
-  if(tempC == -127.00) {
-    Serial.println("Failed to read from DS18B20 sensor");
-    Serial.print("Reading: ");
-    Serial.println(tempC);
-
-    return "--";
-  } else {
-    Serial.print("Temperature Celsius: ");
-    Serial.println(tempC); 
-  }
-  return String(tempC);
-}
-
-String readDSTemperatureF(int num) {
-  // Call sensors.requestTemperatures() to issue a global temperature and Requests to all devices on the bus
-  sensors.requestTemperatures(); 
-  float tempF = NULL;
-  if(num == 1){
-    tempF = sensors.getTempF(sensor1);
-  }
-  else if(num == 2){
-    tempF = sensors.getTempF(sensor2);
+  else if( id == 2){
+    temp = sensors.getTempF(sensor2);
+    Serial.print(" Sensor 2(*F): ");
+    Serial.println(sensors.getTempF(sensor2));
   }
   else{
-    tempF = sensors.getTempF(sensor3);
+    temp = sensors.getTempF(sensor3);
+    Serial.print(" Sensor 3(*F): ");
+    Serial.println(sensors.getTempF(sensor3));
   }
-
-  if(int(tempF) == -196){
-    Serial.println("Failed to read from DS18B20 sensor");
-    return "--";
-  } else {
-    Serial.print("Temperature Fahrenheit: ");
-    Serial.println(tempF);
-  }
-  return String(tempF);
+  return temp;
 }
 
 const char index_html[] PROGMEM = R"rawliteral(
@@ -130,12 +103,6 @@ const char index_html[] PROGMEM = R"rawliteral(
   <h3>Sensor 1</h3>
   <p>
     <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
-    <span class="ds-labels">Temperature Celsius 1</span> 
-    <span id="temperaturec1">%TEMPERATUREC1%</span>
-    <sup class="units">&deg;C</sup>
-  </p>
-  <p>
-    <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
     <span class="ds-labels">Temperature Fahrenheit 1</span>
     <span id="temperaturef1">%TEMPERATUREF1%</span>
     <sup class="units">&deg;F</sup>
@@ -156,16 +123,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   </p>
 </body>
 <script>
-setInterval(function ( ) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("temperaturec1").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "/temperaturec1", true);
-  xhttp.send();
-}, 10000) ;
+
 setInterval(function ( ) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -201,10 +159,8 @@ setInterval(function ( ) {
 
 // Replaces placeholder with DS18B20 values
 String processor(const String& var){
-  if(var == "TEMPERATUREC1"){
-//    return temperatureC1;
-  }
-  else if(var == "TEMPERATUREF1"){
+
+  if(var == "TEMPERATUREF1"){
     return temperatureF1;
   }
   else if(var == "TEMPERATUREF2"){
@@ -224,9 +180,8 @@ void setup(){
   // Start up the DS18B20 library
   sensors.begin();
 
-  temperatureC1 = readDSTemperatureC(1);
   temperatureF1 = readDSTemperatureF(1);
-  temperatureF2 = readDSTemperatureF(2);
+  temperatureF2 = readDSTemperatureF(2); 
   temperatureF3 = readDSTemperatureF(3);
 
   // Connect to Wi-Fi
@@ -245,9 +200,7 @@ void setup(){
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/html", index_html, processor);
   });
-  server.on("/temperaturec1", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", temperatureC1.c_str());
-  });
+
   server.on("/temperaturef1", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", temperatureF1.c_str());
   });
@@ -263,9 +216,8 @@ void setup(){
  
 void loop(){
   if ((millis() - lastTime) > timerDelay) {
-    temperatureC1 = readDSTemperatureC(1);
     temperatureF1 = readDSTemperatureF(1);
-    temperatureF2 = readDSTemperatureF(2);
+    temperatureF2 = readDSTemperatureF(2); 
     temperatureF3 = readDSTemperatureF(3);
     lastTime = millis();
   }  

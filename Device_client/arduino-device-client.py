@@ -3,7 +3,7 @@ import socketio
 # import requests
 # import json
 # import threading
-# import time
+import time
 # from PIL import Image
 # from MistyAPI import Robot
 # from io import BytesIO
@@ -19,6 +19,7 @@ from esp_server_controller import getGrowRoomTemp, getSurroundingAreaTemp,  getW
 
 #Creates the client
 sio = socketio.Client()
+print("test")
 
 server_ip = "http://" + "192.168.0.91" + ":" +"5000"
 #Connects to server
@@ -42,6 +43,11 @@ def sendAreaTemp():
     areaTemp = getSurroundingAreaTemp()
     sio.emit("areaTemp", areaTemp)
 
+def sendAreaTemp2():
+    areaTemp = getSurroundingAreaTemp()
+    print(areaTemp)
+    sio.emit("getAreaTemp", areaTemp)
+
 # When the socket connects    
 @sio.event
 def connect():
@@ -56,3 +62,9 @@ def connect_error():
 @sio.event
 def disconnect():
     print("I'm disconnected!")    
+
+if __name__ == '__main__':
+    while True:
+        sendAreaTemp2()
+        time.sleep(30)
+        
