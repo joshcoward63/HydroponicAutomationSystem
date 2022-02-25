@@ -25,10 +25,15 @@ io.sockets.on('connection', newConnection);
 	//   io.to(socket.id).emit("robotInfo", socket.id);
 	//   clients[socket.id] = null;
 	//   console.log(JSON.stringify(clients))
+		socket.emit("testClient");
 
 	socket.on("getAreaTemp", function getAreaTemp(temp){
-		// console.log(temp);
+		console.log(temp);
 		socket.broadcast.emit("areaTemp",temp);
+	});
+	socket.on("test", function test(temp){
+		console.log(temp);
+		// socket.broadcast.emit("areaTemp",temp);
 	});
 
 	socket.on("getWaterTemp", function getGrowRoomTemp(temp){
