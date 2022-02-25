@@ -25,5 +25,6 @@ With hydroponics there is a lot of monitoring and user interaction that is requi
 
 
 ### Packages
-    pip install python-engineio==3.14.2 python-socketio==4.6.0
+    ```pip install python-engineio==3.14.2 python-socketio==4.6.0```
     socket.io version 2.3.0 both node server and node frontend
+    ```npm i socket.io@2.3.0```
