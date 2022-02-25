@@ -36,10 +36,10 @@ io.sockets.on('connection', newConnection);
 		// socket.broadcast.emit("areaTemp",temp);
 	});
 
-	socket.on("getWaterTemp", function getGrowRoomTemp(temp){
+	socket.on("waterTemp", function getGrowRoomTemp(temp){
 		socket.broadcast.emit("waterTemp",temp);
 	});
-	socket.on("getRoomTemp", function getWaterTemp(temp){
+	socket.on("growRoomTemp", function getWaterTemp(temp){
 		socket.broadcast.emit("roomTemp",temp);
 	});
 	

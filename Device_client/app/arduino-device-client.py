@@ -1,4 +1,4 @@
-# print("please")
+print("please")
 import socketio
 import time
 from esp_server_controller import getGrowRoomTemp, getSurroundingAreaTemp,  getWaterTemp
@@ -96,8 +96,8 @@ if __name__ == '__main__':
     while True:
         # sendTemperatureReadings()
         sendAreaTemp2()
-        # sendRoomTemp2()
-        # sendWaterTemp2()
+        sendRoomTemp2()
+        sendWaterTemp2()
         # test()
         # print("sent")
         time.sleep(5)

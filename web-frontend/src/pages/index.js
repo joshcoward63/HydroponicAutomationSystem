@@ -10,20 +10,18 @@ const Home = () => {
   const [waterTemp, getWaterTemp] = useState(null); 
 
   client.on("temperatureReadings", function(aTemp, rTemp, wTemp ){   
-    console.log(aTemp); 
     getAreaTemp(aTemp);
     getGrowRoomTemp(rTemp);
     getWaterTemp(wTemp);
   });
   client.on("areaTemp", function (aTemp){   
-    console.log(aTemp); 
     getAreaTemp(aTemp);
   });
   client.on("waterTemp", function (wTemp){   
     getWaterTemp(wTemp);
   });
   client.on("roomTemp", function ( rTemp ){   
-    getGrowRoomTemp(wTemp);
+    getGrowRoomTemp(rTemp);
   });
   return (
     
