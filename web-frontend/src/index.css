@@ -15,6 +15,13 @@ body, html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+.card{
+  border: 1px solid #111;
+  margin: 10px 0;
+  padding: 20px ;
+}
+
 .bg-image {
   /* The image used */
   background-image: url("background.png");
