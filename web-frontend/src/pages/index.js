@@ -31,16 +31,24 @@ const Home = () => {
         justifyContent: 'center',
         alignItems: 'center',
         width: "100%",
-        // backgroundColor: '#fff',
-        height: '10%'
+        // backgroundColor: 'rgb(0,0,0)',
+        // backgroundColor: 'rgba(0,0,0,0.4)',
+        position: 'absolute',
+        zIndex: '2'
+        // height: '10%'
       }}
     >
 
     <div     
      style={{
         display: "block",
-        paddingTop:"5%",
-        paddingRight: '50px'
+        paddingTop:"2%",
+        // paddingBottom: "0%",
+        marginTop: '10%',
+        marginRight: "1%",
+        paddingRight: '1%',
+        paddingLeft: '1%',
+        backgroundColor: "#517a04",
       }}>  
     <ReactSpeedometer
         minValue = {50}
@@ -56,7 +64,7 @@ const Home = () => {
         endColor={"green"}
         segments={5555}
         value={areaTemp}
-        // textColor={"white"}
+        textColor={"white"}
         
       />
       {/* <h1>Room Temp</h1> */}

@@ -1,0 +1,37 @@
+version: "1"
+services:
+  api:
+      container_name: web-server
+      build:
+        context: ./webserver
+        dockerfile: Dockerfile
+      ports:
+        - "5000:5000"
+      volumes:
+        - ./webserver:/web-server
+  react-client:
+      container_name: react-frontend
+      build:
+        context: ./web-frontend
+        dockerfile: Dockerfile
+      ports: 
+        - "5500:3000"
+      volumes:
+        - ./web-frontend:/app
+        # - node-modules:/app/node_modules
+      environment:
+        - NODE_ENV=dev
+      # depends_on:
+        # - api
+  python-client:
+      container_name: python-client
+      build:
+        context: ./Device_client
+        dockerfile: Dockerfile
+      volumes:
+        - ./Device_client:/client-app
+      depends_on:
+        - api
+
+volumes:
+  node_modules:
