@@ -60,6 +60,18 @@ io.sockets.on('connection', newConnection);
 
 	// })
 
+	socket.on("turnExhaustFanOn", function turnOnExahustFan(){
+		socket.broadcast.emit("turnOnExhaustFan");
+	});
+
+	socket.on("turnExhaustFanOff", function turnOffExahustFan(){
+		socket.broadcast.emit("turnOffExhaustFan");
+	});
+
+	socket.on("exhaustStatus", function getExhaustStatus(status){
+		socket.broadcast.emit("exhaustStatus", status);
+	});
+
 	
 	socket.on('disconnecting', function(){	
 	    // socket.broadcast.emit("Client disconnected");

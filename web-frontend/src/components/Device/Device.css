@@ -1,0 +1,22 @@
+.device{
+    border-style: solid;
+    display: inline-flex;
+    height: 100%;
+    width: 100%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+h4{
+    margin-left: 1%;
+}
+
+#b1{
+    margin-left: 80%;
+    /* float: right; */
+    /* width: 5%; */
+    /* height: 10%; */
+    background-color: #24A0ED;
+    border-radius: 25%;
+    padding-left: 2%;
+    padding-right: 2%;
+}

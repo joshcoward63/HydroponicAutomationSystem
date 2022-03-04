@@ -1,18 +1,13 @@
-print("please")
 import socketio
 import time
-from esp_server_controller import getGrowRoomTemp, getSurroundingAreaTemp,  getWaterTemp
+from esp_server_controller import*
 
-
-# #Creates the client
+#Creates the client
 sio = socketio.Client()
-# print("test")
 
 server_ip = "http://" + "192.168.0.91" + ":" +"5000"
 
-
-
-# #Connects to server
+#Connects to server
 print("this should print")
 while True:
     print("testtt")
@@ -23,24 +18,22 @@ while True:
         print("Failed to connect to server trying again in 10 seconds")
     print("sleeping")
     time.sleep(10)
-# sio.connect(server_ip)
 
 
 
-
-# #Gets the temperature reading of the grow room
+""" Gets the temperature reading of the grow room """
 @sio.on("getRoomTemp")
 def sendRoomTemp():
     roomTemp = getGrowRoomTemp()
     sio.emit("growRoomTemp", roomTemp)
 
-# #Gets the temperature reading of the water in the system
+""" Gets the temperature reading of the water in the system """
 @sio.on("getWaterTemp")
 def sendWaterTemp():
     waterTemp = getWaterTemp()
     sio.emit("waterTemp", waterTemp)
 
-# #Gets the temperature reading of the surrounding area
+""" Gets the temperature reading of the surrounding area """
 @sio.on("getAreaTemp")
 def sendAreaTemp():
     areaTemp = getSurroundingAreaTemp()
@@ -48,13 +41,11 @@ def sendAreaTemp():
 
 def sendAreaTemp2():
     areaTemp = getSurroundingAreaTemp()
-    # print(areaTemp)
     sio.emit("getAreaTemp", areaTemp)
 
 def sendRoomTemp2():
     roomTemp = getGrowRoomTemp()
     sio.emit("growRoomTemp", roomTemp)
-
 
 def sendWaterTemp2():
     waterTemp = getWaterTemp()
@@ -67,6 +58,18 @@ def sendTemperatureReadings():
     # print(areaTemp)
     sio.emit("getTempReadings", [areaTemp, roomTemp, waterTemp])
 
+@sio.on("turnOffExhaustFan")
+def turnOffExhaustFan_():
+    turnOffExhaustFan()
+
+@sio.on("turnOnExhaustFan")
+def turnOnExhaustFan_():
+    turnOnExhaustFan()
+
+@sio.on("getExhaustStatus")
+def sendExhaustFanStatus():
+    status = getExhaustFanstatus()
+    sio.emit("exhaustStatus", status)
 
 # @sio.on("testClient")
 # def test1():

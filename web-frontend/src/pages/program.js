@@ -9,11 +9,13 @@ const Program = () => {
     <div
       style={{
         // display: 'flex',
+        // backgroundColor: 'blue',
         justifyContent: 'center',
         alignItems: 'center',
         width: "100%",
         position: 'absolute',
-        zIndex: '2'
+        zIndex: '2',
+        height: '100%'
       }}
     >
       <nav
@@ -44,9 +46,11 @@ const Program = () => {
       <div style={{
         width: '80%',
         marginLeft: '10%',
-        justifyContent: 'center'
+        justifyContent: 'center',
         // position: 'absolute',
         // zIndex: "3"
+        // height: '100%',
+        backgroundColor: '#edefec'
       }}>
           {active === "Manual" && <Card data={Data} title='0' cardIndex={0}/>}
           {active === "Automatic" && <Card data={Data} title='1' cardIndex={1}/>}

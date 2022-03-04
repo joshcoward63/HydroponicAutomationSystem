@@ -1,8 +1,13 @@
 import React from 'react';
-import Data from './Data';
-const Card = ({data,title, cardIndex}) => {
+
+const Card = ({data, cardIndex}) => {
     return(
-        <div>
+        <div
+        // style={
+        //     backgroundColor: 
+        // }
+
+        >
         {data[cardIndex].map(item => (
         <div className='card'>
                 {item}
