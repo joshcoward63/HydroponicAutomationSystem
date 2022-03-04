@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactSpeedometer from "react-d3-speedometer"
-import './sensors.css'
 const Speedometer = ({temp, location}) => {
     let val = location.concat(": ");
     if(temp == null){
