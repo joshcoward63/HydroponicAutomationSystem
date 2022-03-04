@@ -30,11 +30,12 @@ const Home = () => {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        // alignItems: 'center',
         width: "100%",
         height: '100%',
         position: 'absolute',
-        zIndex: '2'
+        zIndex: '2',
+        float: 'top'
       }}>
       <Speedometer location ="Room Temp" temp ={areaTemp}/>
       <Speedometer location ="Water Temp" temp ={waterTemp}/>

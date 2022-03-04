@@ -12,7 +12,7 @@ const Speedometer = ({temp, location}) => {
             paddingTop:"2%",
             float: 'top',
             paddingBottom: '1%',
-            // marginTop: '10%',
+            marginTop: '5%',
             marginRight: "1%",
             paddingRight: '1%',
             paddingLeft: '1%',
