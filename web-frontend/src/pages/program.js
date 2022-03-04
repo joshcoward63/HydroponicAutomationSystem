@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Card from '../components/Card/Card';
 import Data from '../components/Card/Data';
-import '../index.css'
+// import '../index.css'
 const Program = () => {
   const [active, setActive] = useState('Manual');
 
