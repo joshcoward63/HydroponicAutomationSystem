@@ -3,11 +3,18 @@ import "./Device.css"
 import client from '../../context/socket'
 
 
+<<<<<<< HEAD
 
+=======
+client.on("exhaustStatus", function(status){
+    setExhaustState(status);
+})
+>>>>>>> 3ae1616389e5c6b64d618200ec51687041daacd2
 
 
 const Device = ({}) =>{    
     const [exhaustState, setExhaustState] = useState("Off");
+<<<<<<< HEAD
     const [regularState, setRegularState] = useState("Off");
     const [mainPumpState, setMainPumpState] = useState("Off");
     const [supplyPumpState, setSupplyPumpState] = useState("Off");
@@ -98,6 +105,29 @@ const Device = ({}) =>{
                 <button id = "b4" onClick={() => onButtonClick4()}>{supplyPumpState}</button> 
             </div>
             
+=======
+
+    function onButtonClick(){
+        let button1 = document.getElementById("b1");
+        
+        if(button1.innerHTML === "On"){
+            
+            setExhaustState('Off');
+            button1.setAttribute("style", "background-color: #f44336;");
+            client.emit('turnExhaustFanOff');
+        }
+        else{
+            client.emit('turnExhaustFanON');
+            setExhaustState('On');
+            button1.setAttribute("style", "background-color: #24A0ED;");
+        }
+    }
+        
+    return (
+        <div className='device'>
+            <h4>Exhaust Fan</h4>
+            <button id = "b1" onClick={() => onButtonClick()}>{exhaustState}</button>
+>>>>>>> 3ae1616389e5c6b64d618200ec51687041daacd2
         </div>
     )
 }
