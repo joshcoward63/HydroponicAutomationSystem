@@ -1,22 +1,49 @@
+.device-panel{
+
+}
+
 .device{
-    border-style: solid;
+    /* border-style: solid; */
     display: inline-flex;
-    height: 100%;
-    width: 100%;
+    height: 15vh;
+    width: 45%;
+    border-radius: 25px;
     padding-top: 1%;
     padding-bottom: 1%;
-    margin-top: .25%;
+    margin-top: 2.5%;
+    margin-right: 2.5%;
+    /* opacity: 90; */
+    background: linear-gradient(127.09deg, #548b12 19.41%, rgba(10, 14, 35, 0.49) 76.65%) border-box;
 }
-h4{
+
+.pumps{
+    list-style-type: none;
+    background: linear-gradient(127.09deg, #548b12 19.41%, rgba(10, 14, 35, 0.49) 76.65%) border-box;
+    width: 92.5%;
+    border-radius: 25px;
+    padding-bottom: 1%;
+    margin-top: 2.5%;
+    margin-right: 2.5%;
+}
+
+ul{
+    list-style-type: none;
+}
+
+h4, h5{
     margin-left: 1%;
-    width: 10%;
+    padding-top: 3.5%;
+    align-items: center;
+    text-align: center;
+    width: 20%;
+    font-size: 100%;
 }
 
 #b1, #b2, #b3, #b4{
-    margin-left: 80%;
+    margin-left: 60%;
     /* float: right; */
     /* width: 5%; */
-    /* height: 10%; */
+    height: 80%;
     background-color: #f44336;
     border-radius: 25%;
     padding-left: 2%;

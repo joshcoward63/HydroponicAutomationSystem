@@ -15,11 +15,11 @@ export default[
     <div style={{
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#edefea'
+            // backgroundColor: '#edefea'
 
         }}>
         <div>
-        <h2>Devices:</h2>  
+        {/* <h2>Devices:</h2>   */}
         </div>
         <Device/>
     </div>

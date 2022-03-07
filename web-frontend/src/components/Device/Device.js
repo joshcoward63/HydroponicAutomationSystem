@@ -77,7 +77,7 @@ const Device = ({}) =>{
     }
         
     return (
-        <div >
+        <div className='device-panel'>
             <div className='device'>
                 <h4>Exhaust Fan</h4>
                 <button id = "b1" onClick={() => onButtonClick1()}>{exhaustState}</button>
@@ -95,6 +95,32 @@ const Device = ({}) =>{
             <div className='device'>
                <h4>Supply Pump</h4>
                 <button id = "b4" onClick={() => onButtonClick4()}>{supplyPumpState}</button> 
+            </div>
+            <div className='pumps'>
+                <h4>Nutrient and Ph Control</h4>
+                <h5>Pumps:</h5>
+                <ul>
+                    <li>
+                        <label>MasterBlend</label>
+                        <button id = "b6">On</button>
+                        <input type="number"/>
+                    </li>
+                    <li>
+                        <label>Epsom Salt</label>
+                        <button id = "b6">On</button>
+                        <input type="number"/>
+                    </li>
+                    <li>
+                        <label>Calcium Nitrate</label>
+                        <button id = "b6">On</button>
+                        <input type="number"/>
+                    </li>
+                    <li>
+                        <label>Ph Down</label>
+                        <button id = "b6">On</button>
+                        <input type="number"/>
+                    </li>
+                </ul>
             </div>
             
         </div>
