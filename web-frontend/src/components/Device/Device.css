@@ -5,17 +5,19 @@
     width: 100%;
     padding-top: 1%;
     padding-bottom: 1%;
+    margin-top: .25%;
 }
 h4{
     margin-left: 1%;
+    width: 10%;
 }
 
-#b1{
+#b1, #b2, #b3, #b4{
     margin-left: 80%;
     /* float: right; */
     /* width: 5%; */
     /* height: 10%; */
-    background-color: #24A0ED;
+    background-color: #f44336;
     border-radius: 25%;
     padding-left: 2%;
     padding-right: 2%;

@@ -51,31 +51,31 @@ def getSurroundingAreaTemp():
         areaTemp = "000"
     return areaTemp
 
-""" Logs in to the Homebridge Interface  """
-def loginToHomebridge():
-    driver.get("http://localhost:8581/accessories")
-    time.sleep(.5)        
-    driver.find_element(By.ID,"form-username").send_keys('admin')
-    driver.find_element(By.ID,"form-pass").send_keys('admin')
-    driver.find_element(By.XPATH, "/html/body/app-root/app-login/div/div/form/div[2]/button").click()
-    time.sleep(.5)
+# """ Logs in to the Homebridge Interface  """
+# def loginToHomebridge():
+#     driver.get("http://localhost:8581/accessories")
+#     time.sleep(.5)        
+#     driver.find_element(By.ID,"form-username").send_keys('admin')
+#     driver.find_element(By.ID,"form-pass").send_keys('admin')
+#     driver.find_element(By.XPATH, "/html/body/app-root/app-login/div/div/form/div[2]/button").click()
+#     time.sleep(.5)
 
-""" Gets the state of the Exhaust fan (on/off) """
-def getExhaustFanstatus():
-    loginToHomebridge()
-    status = driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[3]").get_attribute("innerHTML")
-    return status
+# """ Gets the state of the Exhaust fan (on/off) """
+# def getExhaustFanstatus():
+#     loginToHomebridge()
+#     status = driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[3]").get_attribute("innerHTML")
+#     return status
 
-""" Gets the state of the Oscillating fan (on/off) """
-def getFanStatus():
-    pass
+# """ Gets the state of the Oscillating fan (on/off) """
+# def getFanStatus():
+#     pass
 
-""" Turns the Grow Tent Exhaust Fan On"""
-def turnOnExhaustFan():
-    loginToHomebridge()
-    driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[1]").click()
+# """ Turns the Grow Tent Exhaust Fan On"""
+# def turnOnExhaustFan():
+#     loginToHomebridge()
+#     driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[1]").click()
     
-    """ Turns the Grow Tent Exhaust Fan Off"""
-def turnOffExhaustFan():
-    loginToHomebridge()
-    driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[1]").click()
+#     """ Turns the Grow Tent Exhaust Fan Off"""
+# def turnOffExhaustFan():
+#     loginToHomebridge()
+#     driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[1]").click()

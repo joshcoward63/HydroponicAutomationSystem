@@ -1,6 +1,7 @@
 ;/*This file creates a Nodejs server that listens for command from Misty Client and frontend Web Client*/
 const { Console, countReset } = require('console');
 var express = require('express');
+const { stat } = require('fs');
 var app = express();
 
 // console.log(config);
@@ -62,17 +63,46 @@ io.sockets.on('connection', newConnection);
 
 	socket.on("turnExhaustFanOn", function turnOnExahustFan(){
 		socket.broadcast.emit("turnOnExhaustFan");
+		console.log("on");
 	});
 
 	socket.on("turnExhaustFanOff", function turnOffExahustFan(){
 		socket.broadcast.emit("turnOffExhaustFan");
+		console.log("off");
 	});
 
-	socket.on("exhaustStatus", function getExhaustStatus(status){
+
+	socket.on("turnRegularFanOn", function turnOnRegularFan(){
+		socket.broadcast.emit("turnOnRegularFan");
+		console.log("on");
+	});
+
+	socket.on("turnRegularFanOff", function turnOffRegularFan(){
+		socket.broadcast.emit("turnOffRegularFan");
+		console.log("off");
+	});
+
+	//Status
+
+	socket.on("getRegularStatus", function getRegularStatus(){
+		socket.broadcast.emit("getRegularStatus");
+	});
+
+	socket.on("getExhaustStatus", function getExhaustStatus(){
+		socket.broadcast.emit("getExhaustStatus");
+	});
+
+	socket.on("regularStatus", function regularStatus(status){
+		socket.broadcast.emit("regularStatus", status);
+		console.log("getting status");
+	});
+
+	socket.on("exhaustStatus", function exhaustStatus(status){
 		socket.broadcast.emit("exhaustStatus", status);
+		console.log(status)
+		console.log("getting status");
 	});
 
-	
 	socket.on('disconnecting', function(){	
 	    // socket.broadcast.emit("Client disconnected");
 		console.log("client disconnected: ", socket.id);

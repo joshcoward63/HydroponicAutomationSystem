@@ -1,16 +1,14 @@
 import socketio
 import time
 from esp_server_controller import*
-
+from HomebridgeRequest import*
 #Creates the client
 sio = socketio.Client()
 
 server_ip = "http://" + "192.168.0.91" + ":" +"5000"
 
 #Connects to server
-print("this should print")
 while True:
-    print("testtt")
     try:
         sio.connect(server_ip)
         break
@@ -60,16 +58,58 @@ def sendTemperatureReadings():
 
 @sio.on("turnOffExhaustFan")
 def turnOffExhaustFan_():
-    turnOffExhaustFan()
+    turnDeviceOff('Exhaust Fan')
 
 @sio.on("turnOnExhaustFan")
 def turnOnExhaustFan_():
-    turnOnExhaustFan()
+    turnDeviceOn("Exhaust Fan")
 
 @sio.on("getExhaustStatus")
 def sendExhaustFanStatus():
-    status = getExhaustFanstatus()
+    status = getExhaustFanState()
     sio.emit("exhaustStatus", status)
+
+@sio.on("turnOffRegularFan")
+def turnOffRegularFan_():
+    turnDeviceOff("Regular Fan")
+
+@sio.on("turnOnRegularFan")
+def turnOnRegularFan_():
+    turnDeviceOn("Regular Fan")
+
+@sio.on("getRegularStatus")
+def sendRegularFanStatus():
+    status = getRegularFanState()
+    sio.emit("regularStatus", status)
+
+
+@sio.on("turnOffMainPump")
+def turnOffMainPump_():
+    turnDeviceOff("Main Pump")
+
+@sio.on("turnOnMainPump")
+def turnOnMainPump_():
+    turnDeviceOn("Main Pump")
+
+@sio.on("getMainPump")
+def sendMainPumpStatus():
+    status = getDeviceState("Main Pump")
+    sio.emit("mainPumpStatus", status)
+
+@sio.on("turnOffSupplyPump")
+def turnOffSupplyPump_():
+    turnDeviceOff("Supply Pump")
+
+@sio.on("turnOnSupplyPump")
+def turnOnSupplyPump_():
+    turnDeviceOn("Supply Pump")
+
+@sio.on("getSupplyPump")
+def sendSupplyPumpStatus():
+    status = getDeviceState("Supply Pump")
+    sio.emit("supplyPumpStatus", status)
+
+
 
 # @sio.on("testClient")
 # def test1():
