@@ -15,7 +15,7 @@ def homebridgeLogin():
         "username": "admin", 
         "password": 'admin'
     }
-    r = requests.post("http://192.168.0.91:8581/api/auth/login", json=json)
+    r = requests.post("http://192.168.0.18:8581/api/auth/login", json=json)
     # print(r.status_code)
     if(r.status_code != 201):
         print("Homebridge login request failed with status code ",r.status_code,"\n") 
@@ -25,16 +25,16 @@ def homebridgeLogin():
         return bearer_token
 
 def restartHombridge():
-    r = requests.put("http://192.168.0.91:8581/api/server/restart", headers=headers)
+    r = requests.put("http://192.168.0.18:8581/api/server/restart", headers=headers)
     if r.status_code != 200:
         print("Unable to restart Homebridge, status code: " + r.status_code)
 
 def getAccessories():
-    r = requests.get("http://192.168.0.91:8581/api/accessories", headers=headers)
+    r = requests.get("http://192.168.0.18:8581/api/accessories", headers=headers)
     # print(r.json())
 
 def getAccessoriesLayout():
-    r = requests.get("http://192.168.0.91:8581/api/accessories/layout", headers=headers)
+    r = requests.get("http://192.168.0.18:8581/api/accessories/layout", headers=headers)
     devices = {}
     devices_dict = r.json()[0]['services']
     for device in devices_dict: 
@@ -52,7 +52,7 @@ def turnOnExhaustFan():
         "characteristicType": "On",
         "value": "True"
     }
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.put(url, headers=headers, json=json)
     if r.status_code != 200:
         print('Unable to make request to turn on fan status code: ' + r.status_code)
@@ -63,7 +63,7 @@ def turnOffExhaustFan():
         "characteristicType": "On",
         "value": "False"
     }
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.put(url, headers=headers, json=json)
     if r.status_code != 200:
         print('Unable to make request to turn on fan status code: ' + r.status_code)
@@ -74,7 +74,7 @@ def turnOnRegularFan():
         "characteristicType": "On",
         "value": "True"
     }
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.put(url, headers=headers, json=json)
     if r.status_code != 200:
         print('Unable to make request to turn on fan status code: ' + r.status_code)
@@ -85,7 +85,7 @@ def turnOffRegularFan():
         "characteristicType": "On",
         "value": "False"
     }
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.put(url, headers=headers, json=json)
     if r.status_code != 200:
         print('Unable to make request to turn on fan status code: ' + r.status_code)
@@ -93,7 +93,7 @@ def turnOffRegularFan():
 
 def getExhaustFanState():
     id = devices["Exhaust Fan"]
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.get(url, headers=headers)
     fan_state =r.json()['serviceCharacteristics'][0]['value']
     if r.status_code != 200:
@@ -106,7 +106,7 @@ def getExhaustFanState():
 
 def getRegularFanState():
     id = devices["Regular Fan"]
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.get(url, headers=headers)
     fan_state =r.json()['serviceCharacteristics'][0]['value']
     if r.status_code != 200:
@@ -126,7 +126,7 @@ def turnDeviceOn(device_name):
         "characteristicType": "On",
         "value": "True"
     }
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.put(url, headers=headers, json=json)
     if r.status_code != 200:
         print('Unable to make request to turn on fan status code: ' + r.status_code)
@@ -137,7 +137,7 @@ def turnDeviceOff(device_name):
         "characteristicType": "On",
         "value": "False"
     }
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.put(url, headers=headers, json=json)
     if r.status_code != 200:
         print('Unable to make request to turn on fan status code: ' + r.status_code)
@@ -145,7 +145,7 @@ def turnDeviceOff(device_name):
 
 def getDeviceState(device_name):
     id = devices[device_name]
-    url = "http://192.168.0.91:8581/api/accessories/" + id
+    url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.get(url, headers=headers)
     # print(r.json()['serviceCharacteristics'])
     state = r.json()['serviceCharacteristics'][0]['value']
