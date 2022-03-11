@@ -26,7 +26,9 @@ const Program = () => {
       }}>
         <button style={{
           backgroundColor: '#62BD69',
-          width: '25%'
+          width: '25%' ,
+          fontWeight: 'bold',
+          color: '#060b26'
           }} 
           onClick={() => setActive("Manual")}
           >
@@ -35,7 +37,10 @@ const Program = () => {
 
         <button style={{
           backgroundColor: '#62BD69',
-          width: '25%'
+          width: '25%',
+          // height: '35%',
+          fontWeight: 'bold',
+          color: '#060b26'
           }}
           onClick={() => setActive("Automatic")}
           >Control Automatically
@@ -51,6 +56,7 @@ const Program = () => {
         // zIndex: "3"
         // height: '100%',
         borderStyle: 'none',
+        
         // background: 'linear-gradient(127.09deg, #548b12 19.41%, rgba(10, 14, 35, 0.49) 76.65%) border-box',
         // backgroundColor: 'green'
       }}>

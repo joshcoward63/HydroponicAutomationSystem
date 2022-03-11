@@ -46,11 +46,11 @@ void setup() {
   pinMode(output2, OUTPUT);
   pinMode(output4, OUTPUT);
   pinMode(output5, OUTPUT);
-  // Set outputs to LOW
-  digitalWrite(output15, LOW);
-  digitalWrite(output2, LOW);
-  digitalWrite(output4, LOW);
-  digitalWrite(output5, LOW);
+  // Set outputs to HIGH
+  digitalWrite(output15, HIGH);
+  digitalWrite(output2, HIGH);
+  digitalWrite(output4, HIGH);
+  digitalWrite(output5, HIGH);
   // Connect to Wi-Fi network with SSID and password
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -96,35 +96,35 @@ void loop(){
             if (header.indexOf("GET /15/on") >= 0) {
               Serial.println("GPIO 15 on");
               output15State = "on";
-              digitalWrite(output15, HIGH);
+              digitalWrite(output15, LOW);
             } else if (header.indexOf("GET /15/off") >= 0) {
               Serial.println("GPIO 15 off");
               output15State = "off";
-              digitalWrite(output15, LOW);
+              digitalWrite(output15, HIGH);
             } else if (header.indexOf("GET /2/on") >= 0) {
               Serial.println("GPIO 2 on");
               output2State = "on";
-              digitalWrite(output2, HIGH);
+              digitalWrite(output2, LOW);
             } else if (header.indexOf("GET /2/off") >= 0) {
               Serial.println("GPIO 2 off");
               output2State = "off";
-              digitalWrite(output2, LOW);
+              digitalWrite(output2, HIGH);
             } else if (header.indexOf("GET /4/on") >= 0) {
               Serial.println("GPIO 4 on");
               output4State = "on";
-              digitalWrite(output4, HIGH);
+              digitalWrite(output4, LOW);
             } else if (header.indexOf("GET /4/off") >= 0) {
               Serial.println("GPIO 4 off");
               output4State = "off";
-              digitalWrite(output4, LOW);
+              digitalWrite(output4, HIGH);
             } else if (header.indexOf("GET /5/on") >= 0) {
               Serial.println("GPIO 5 on");
               output5State = "on";
-              digitalWrite(output5, HIGH);
+              digitalWrite(output5, LOW);
             } else if (header.indexOf("GET /5/off") >= 0) {
               Serial.println("GPIO 5 off");
               output5State = "off";
-              digitalWrite(output5, LOW);
+              digitalWrite(output5, HIGH);
             }
             
             // Display the HTML web page
@@ -143,38 +143,42 @@ void loop(){
             
             // Display current state, and ON/OFF buttons for GPIO 15  
             client.println("<p>GPIO 15 - State " + output15State + "</p>");
+            client.println("<p id=\"s1\">" + output15State + "</p>");
             // If the output15State is off, it displays the ON button       
             if (output15State=="off") {
-              client.println("<p><a href=\"/15/on\"><button class=\"button\">ON</button></a></p>");
+              client.println("<p id=\"b1\"><a href=\"/15/on\"><button class=\"button\">ON</button></a></p>");
             } else {
-              client.println("<p><a href=\"/15/off\"><button class=\"button button2\">OFF</button></a></p>");
+              client.println("<p id=\"b1\"><a href=\"/15/off\"><button class=\"button button2\">OFF</button></a></p>");
             } 
                
             // Display current state, and ON/OFF buttons for GPIO 2  
             client.println("<p>GPIO 2 - State " + output2State + "</p>");
+            client.println("<p id=\"s2\">" + output2State + "</p>");
             // If the output2State is off, it displays the ON button       
             if (output2State=="off") {
-              client.println("<p><a href=\"/2/on\"><button class=\"button\">ON</button></a></p>");
+              client.println("<p id=\"b2\"><a href=\"/2/on\"><button class=\"button\">ON</button></a></p>");
             } else {
-              client.println("<p><a href=\"/2/off\"><button class=\"button button2\">OFF</button></a></p>");
+              client.println("<p id=\"b2\"><a href=\"/2/off\"><button class=\"button button2\">OFF</button></a></p>");
             }
 
             // Display current state, and ON/OFF buttons for GPIO 4  
             client.println("<p>GPIO 4 - State " + output4State + "</p>");
+            client.println("<p id=\"s3\">" + output4State + "</p>");
             // If the output4State is off, it displays the ON button       
             if (output4State=="off") {
-              client.println("<p><a href=\"/4/on\"><button class=\"button\">ON</button></a></p>");
+              client.println("<p id=\"b3\"><a href=\"/4/on\"><button class=\"button\">ON</button></a></p>");
             } else {
-              client.println("<p><a href=\"/4/off\"><button class=\"button button2\">OFF</button></a></p>");
+              client.println("<p id=\"b3\"><a href=\"/4/off\"><button class=\"button button2\">OFF</button></a></p>");
             }
 
             // Display current state, and ON/OFF buttons for GPIO 5  
             client.println("<p>GPIO 5 - State " + output5State + "</p>");
+            client.println("<p id=\"s4\">" + output5State + "</p>");
             // If the output5State is off, it displays the ON button       
             if (output5State=="off") {
-              client.println("<p><a href=\"/5/on\"><button class=\"button\">ON</button></a></p>");
+              client.println("<p id=\"b4\"><a href=\"/5/on\"><button class=\"button\">ON</button></a></p>");
             } else {
-              client.println("<p><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
+              client.println("<p id=\"b4\"><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
             }
             client.println("</body></html>");
             

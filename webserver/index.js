@@ -29,7 +29,7 @@ io.sockets.on('connection', newConnection);
 		socket.emit("testClient");
 
 	socket.on("getAreaTemp", function getAreaTemp(temp){
-		console.log(temp);
+		// console.log(temp);
 		socket.broadcast.emit("areaTemp",temp);
 	});
 	socket.on("test", function test(temp){
@@ -82,6 +82,22 @@ io.sockets.on('connection', newConnection);
 		console.log("off");
 	});
 
+	socket.on("turnMainPumpOn", function turnOnMainPump(){
+		socket.broadcast.emit("turnOnMainPump");
+		console.log("off");
+	});
+	socket.on("turnMainPumpOff", function turnOffMainPump(){
+		socket.broadcast.emit("turnOffMainPump");
+		console.log("off");
+	});
+	socket.on("turnSupplyPumpOn", function turnOnSupplyPump(){
+		socket.broadcast.emit("turnOnSupplyPump");
+		console.log("off");
+	});
+	socket.on("turnSupplyPumpOff", function turnOffSupplyPump(){
+		socket.broadcast.emit("turnOffSupplyPump");
+		console.log("off");
+	});
 	//Status
 
 	socket.on("getRegularStatus", function getRegularStatus(){
@@ -101,6 +117,25 @@ io.sockets.on('connection', newConnection);
 		socket.broadcast.emit("exhaustStatus", status);
 		console.log(status)
 		console.log("getting status");
+	});
+
+
+	socket.on("getMainPumpStatus", function getRegularStatus(){
+		socket.broadcast.emit("getMainPumpStatus");
+	});
+
+	socket.on("mainPumpStatus", function regularStatus(status){
+		socket.broadcast.emit("mainPumpStatus", status);
+		console.log("getting main status");
+	});
+
+	socket.on("getSupplyPumpStatus", function getRegularStatus(){
+		socket.broadcast.emit("getSupplyPumpStatus");
+	});
+
+	socket.on("supplyPumpStatus", function regularStatus(status){
+		socket.broadcast.emit("supplyPumpStatus", status);
+		console.log("getting supply status");
 	});
 
 	socket.on('disconnecting', function(){	

@@ -58,23 +58,26 @@ def sendTemperatureReadings():
 
 @sio.on("turnOffExhaustFan")
 def turnOffExhaustFan_():
-    turnDeviceOff('Exhaust Fan')
+    turnDeviceOff('Exhaust Fan Off')
 
 @sio.on("turnOnExhaustFan")
 def turnOnExhaustFan_():
-    turnDeviceOn("Exhaust Fan")
+    turnDeviceOn("Exhaust Fan On")
 
 @sio.on("getExhaustStatus")
 def sendExhaustFanStatus():
+    print("Getting status")
     status = getExhaustFanState()
     sio.emit("exhaustStatus", status)
 
 @sio.on("turnOffRegularFan")
 def turnOffRegularFan_():
+    print("Regular Fan Off")
     turnDeviceOff("Regular Fan")
 
 @sio.on("turnOnRegularFan")
 def turnOnRegularFan_():
+    print("Regular Fan On")
     turnDeviceOn("Regular Fan")
 
 @sio.on("getRegularStatus")
@@ -86,30 +89,36 @@ def sendRegularFanStatus():
 @sio.on("turnOffMainPump")
 def turnOffMainPump_():
     turnDeviceOff("Main Pump")
+    print("Main Pump On")
 
 @sio.on("turnOnMainPump")
 def turnOnMainPump_():
+    print("Main Pump On")
     turnDeviceOn("Main Pump")
 
-@sio.on("getMainPump")
-def sendMainPumpStatus():
+@sio.on("getMainPumpStatus")
+def sendMainPumpStatus():    
     status = getDeviceState("Main Pump")
     sio.emit("mainPumpStatus", status)
 
 @sio.on("turnOffSupplyPump")
 def turnOffSupplyPump_():
+    print("Supply Pump Off")
     turnDeviceOff("Supply Pump")
 
 @sio.on("turnOnSupplyPump")
 def turnOnSupplyPump_():
+    print("Supply Pump On")
     turnDeviceOn("Supply Pump")
 
-@sio.on("getSupplyPump")
+@sio.on("getSupplyPumpStatus")
 def sendSupplyPumpStatus():
     status = getDeviceState("Supply Pump")
     sio.emit("supplyPumpStatus", status)
 
-
+def errorHandler(device, issue):
+    sio.emit("device error", device, issue)
+    
 
 # @sio.on("testClient")
 # def test1():
