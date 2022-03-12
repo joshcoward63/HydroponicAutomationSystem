@@ -29,7 +29,6 @@ io.sockets.on('connection', newConnection);
 		socket.emit("testClient");
 
 	socket.on("getAreaTemp", function getAreaTemp(temp){
-		// console.log(temp);
 		socket.broadcast.emit("areaTemp",temp);
 	});
 	socket.on("test", function test(temp){
@@ -137,6 +136,10 @@ io.sockets.on('connection', newConnection);
 		socket.broadcast.emit("supplyPumpStatus", status);
 		console.log("getting supply status");
 	});
+
+	socket.on("togglePump", function togglePump(pump){
+		socket.broadcast.emit("togglePump", pump);
+	})
 
 	socket.on('disconnecting', function(){	
 	    // socket.broadcast.emit("Client disconnected");

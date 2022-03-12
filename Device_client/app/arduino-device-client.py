@@ -1,6 +1,8 @@
+from platform import python_branch
 import socketio
 import time
 from esp_server_controller import*
+from pumpController import*
 from HomebridgeRequest import*
 #Creates the client
 sio = socketio.Client()
@@ -25,9 +27,17 @@ def sendRoomTemp():
     roomTemp = getGrowRoomTemp()
     sio.emit("growRoomTemp", roomTemp)
 
+def sendRoomTemp2():
+    roomTemp = getGrowRoomTemp()
+    sio.emit("growRoomTemp", roomTemp)
+
 """ Gets the temperature reading of the water in the system """
 @sio.on("getWaterTemp")
 def sendWaterTemp():
+    waterTemp = getWaterTemp()
+    sio.emit("waterTemp", waterTemp)
+
+def sendWaterTemp2():
     waterTemp = getWaterTemp()
     sio.emit("waterTemp", waterTemp)
 
@@ -41,28 +51,21 @@ def sendAreaTemp2():
     areaTemp = getSurroundingAreaTemp()
     sio.emit("getAreaTemp", areaTemp)
 
-def sendRoomTemp2():
-    roomTemp = getGrowRoomTemp()
-    sio.emit("growRoomTemp", roomTemp)
 
-def sendWaterTemp2():
-    waterTemp = getWaterTemp()
-    sio.emit("waterTemp", waterTemp)
-
+""" Sends all temperature readings """
 def sendTemperatureReadings():
     areaTemp = getSurroundingAreaTemp()
     roomTemp = getGrowRoomTemp()
     waterTemp = getWaterTemp()
-    # print(areaTemp)
     sio.emit("getTempReadings", [areaTemp, roomTemp, waterTemp])
 
 @sio.on("turnOffExhaustFan")
 def turnOffExhaustFan_():
-    turnDeviceOff('Exhaust Fan Off')
+    turnDeviceOff('Exhaust Fan')
 
 @sio.on("turnOnExhaustFan")
 def turnOnExhaustFan_():
-    turnDeviceOn("Exhaust Fan On")
+    turnDeviceOn("Exhaust Fan")
 
 @sio.on("getExhaustStatus")
 def sendExhaustFanStatus():
@@ -116,18 +119,15 @@ def sendSupplyPumpStatus():
     status = getDeviceState("Supply Pump")
     sio.emit("supplyPumpStatus", status)
 
+@sio.on("togglePump")
+def togglePump(data):
+    pumpName = data[0]
+    pumpDuration = int(data[1])
+    turnOnPump(pumpName, pumpDuration)
+
 def errorHandler(device, issue):
     sio.emit("device error", device, issue)
     
-
-# @sio.on("testClient")
-# def test1():
-#     # areaTemp = getSurroundingAreaTemp()
-#     sio.emit("test", 12)
-
-# def test():
-#     # areaTemp = getSurroundingAreaTemp()
-#     sio.emit("test", 12)
 
 # When the socket connects    
 @sio.event
@@ -146,12 +146,9 @@ def disconnect():
 
 if __name__ == '__main__':
     while True:
-        # sendTemperatureReadings()
         sendAreaTemp2()
         sendRoomTemp2()
         sendWaterTemp2()
-        # test()
-        # print("sent")
         time.sleep(5)
         
         

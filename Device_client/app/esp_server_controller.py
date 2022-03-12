@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
-
+import requests
 
 chrome_options  = webdriver.ChromeOptions()
 chrome_options .add_argument("--headless") #Note this line keeps browser from opening
@@ -18,8 +18,48 @@ chrome_prefs["profile.default_content_settings"] = {"images": 2}
 
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
-def turn_pump_on(pump, duration):
-    pass
+""" Gets the  current ON/OFF states of the nutrient dispensing pumps """
+def getPumpStates():
+    driver.get("http://192.168.0.198/")
+    states = {
+        0: "",
+        1: "",
+        2: "",
+        3: ""
+    }
+    states[0] = driver.find_element(By.ID, "s1").get_attribute("innerHTML")
+    states[1] = driver.find_element(By.ID, "s2").get_attribute("innerHTML")
+    states[2] = driver.find_element(By.ID, "s3").get_attribute("innerHTML")
+    states[3] = driver.find_element(By.ID, "s4").get_attribute("innerHTML")
+    
+    return states
+
+""" Turns on a nutrient/ph controlling pump for a set duration """
+def turnOnPump(pump, duration):
+    driver.get("http://192.168.0.198/")
+    if pump == "MasterBlend":
+        pump = driver.find_element(By.ID, "b1")
+        pump.click() # Turns Pump on
+        time.sleep(duration)
+        pump.click()  # Turns Pump off
+    elif pump == "Epsom Salt":
+        pump = driver.find_element(By.ID, "b2")
+        pump.click() # Turns Pump on
+        time.sleep(duration)
+        pump.click()  # Turns Pump off
+    elif pump == "Calcium Nitrate":
+        pump = driver.find_element(By.ID, "b3")
+        pump.click() # Turns Pump on
+        time.sleep(duration)
+        pump.click() # Turns Pump off
+    elif pump == "Ph Down":
+        pump = driver.find_element(By.ID, "b4")
+        pump.click() # Turns Pump on
+        time.sleep(duration)
+        pump.click()  # Turns Pump off
+    else:
+        print("Error Pump does not exist!") 
+    return 'success'
 
 """ Gets the temperature of the water in the reservoir """
 def getWaterTemp():
@@ -50,32 +90,3 @@ def getSurroundingAreaTemp():
     except:
         areaTemp = "000"
     return areaTemp
-
-# """ Logs in to the Homebridge Interface  """
-# def loginToHomebridge():
-#     driver.get("http://localhost:8581/accessories")
-#     time.sleep(.5)        
-#     driver.find_element(By.ID,"form-username").send_keys('admin')
-#     driver.find_element(By.ID,"form-pass").send_keys('admin')
-#     driver.find_element(By.XPATH, "/html/body/app-root/app-login/div/div/form/div[2]/button").click()
-#     time.sleep(.5)
-
-# """ Gets the state of the Exhaust fan (on/off) """
-# def getExhaustFanstatus():
-#     loginToHomebridge()
-#     status = driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[3]").get_attribute("innerHTML")
-#     return status
-
-# """ Gets the state of the Oscillating fan (on/off) """
-# def getFanStatus():
-#     pass
-
-# """ Turns the Grow Tent Exhaust Fan On"""
-# def turnOnExhaustFan():
-#     loginToHomebridge()
-#     driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[1]").click()
-    
-#     """ Turns the Grow Tent Exhaust Fan Off"""
-# def turnOffExhaustFan():
-#     loginToHomebridge()
-#     driver.find_element(By.XPATH,"/html/body/app-root/app-layout/div/div/app-accessories/div/div[2]/div/div[2]/div/div[1]/app-accessory-tile/app-outlet/div/div/div[1]").click()

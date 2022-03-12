@@ -126,7 +126,6 @@ const Device = ({}) =>{
         if(device.innerHTML === "On"){            
             changeDeviceState(name,"Off");
             device.setAttribute("style", "background-color: #f44336;");
-            console.log("klas")
         }
         else{            
             changeDeviceState(name,"On");
@@ -136,13 +135,23 @@ const Device = ({}) =>{
 
 
     function nutrientController(pump, quantity){
-        // let pump = document.getElementById(pump);
-        // let amount = document.getElementById(quantity).innerHTML;
-        // switch(pump.innerHTML){
-        //     case "MasterBlend":
-        //         client.emit()
-                
-        // }
+        let amount = document.getElementById(quantity).value;
+        amount = (amount / 1.2);
+        switch(pump){
+            case "MasterBlend":
+                client.emit("togglePump", ["MasterBlend", amount]);
+                break;
+            case "Epsom Salt":
+                client.emit("togglePump",["Epsom Salt", amount]);
+                break;
+            case "Calcium Nitrate":
+                client.emit("togglePump",["Calcium Nitrate", amount]);
+                break;
+            case "Ph Down":
+                client.emit("togglePump",["Ph Down", amount]);
+                break;         
+        }
+        document.getElementById(quantity).value = null;
 
     }
 
@@ -172,25 +181,25 @@ const Device = ({}) =>{
                 <ul id="grid-container">
                     <li class="item1">
                         <label>MasterBlend</label> 
-                        <button className="pb" id = "pb1"o nClick={() => nutrientController("pb1", "pi1")}>Dose</button>
+                        <button className="pb" onClick={() => nutrientController("MasterBlend", "pi1")}>Dose</button>
                         <input id ="pi1" type="number"/>
                         <label>mL</label>
                     </li>
                     <li class="item2">
                         <label>Epsom Salt</label>
-                        <button className="pb" id = "pb2" onClick={() => nutrientController("pb2", "pi2")}>Dose</button>
+                        <button className="pb" onClick={() => nutrientController("Epsom Salt", "pi2")}>Dose</button>
                         <input id ="pi2" type="number"/>
                         <label>mL</label>
                     </li>
                     <li class="item3">
                         <label>Calcium Nitrate</label>
-                        <button className="pb" id = "pb3" onClick={() => nutrientController("pb3", "pi3")}>Dose</button>
+                        <button className="pb" onClick={() => nutrientController("Calcium Nitrate", "pi3")}>Dose</button>
                         <input id ="pi3" type="number"/>
                         <label>mL</label>
                     </li>
                     <li class="item4">
                         <label>Ph Down</label>
-                        <button className="pb" id = "pb4" onClick={() => nutrientController("pb4", "pi4")}>Dose</button>
+                        <button className="pb"  onClick={() => nutrientController("Ph Down", "pi4")}>Dose</button>
                         <input id ="pi4" type="number"/>
                         <label>mL</label>
                     </li>
