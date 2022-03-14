@@ -19,6 +19,8 @@ HX711_ADC LoadCell(HX711_dout, HX711_sck);
 const int calVal_calVal_eepromAdress = 0;
 unsigned long t = 0;
 
+float weight;
+
 WebServer server(80);
 
 StaticJsonDocument<250> jsonDocument;
@@ -42,11 +44,12 @@ void connectToWiFi() {
 }
 
 void setup_routing() {     
-  server.on("/getWeight", HTTP_GET, getWeight);
+  server.on("/weight", HTTP_GET, getWeight);
+  server.on("/test", HTTP_GET, getWeight);
   server.begin();    
 }
  
-void create_json(char *tag, String value) {  
+void create_json(char *tag, float value) {  
   jsonDocument.clear();  
   jsonDocument["type"] = tag;
   jsonDocument["value"] = value;
@@ -59,26 +62,24 @@ void add_json_object(char *tag, String value) {
   obj["value"] = value;
 }
 
-void getWeight(){
-  Serial.println("Getting current load");
-  static boolean newDataReady = 0;
-  static boolean newDataReady = 0;
-  if (newDataReady) {    
-     float i = LoadCell.getData();
-     Serial.print("Load_cell output val: ");
-     Serial.println(i);
-     newDataReady = 0;
-     t = millis();  
-     create_json("weight", i); 
-     server.send(200,"application/json", buffer);
-  }  
+void test(){
+   create_json("weight", weight);
+   server.send(200,"application/json", buffer);
 }
 
-void setup() {     
-  Serial.begin(57600);    
+void getWeight(){
+  create_json("weight", weight); 
+  server.send(200,"application/json", buffer);
+   
+}
+
+void setup() { 
+  connectToWiFi();  
+  setup_routing();    
+  Serial.begin(115200);    
   Serial.println("Starting...");
   float calibrationValue; // calibration value
-  calibrationValue = 9355.53;
+  calibrationValue = -9457;
   LoadCell.begin();
   unsigned long stabilizingtime = 2000;
   boolean _tare = true;
@@ -105,13 +106,35 @@ void setup() {
   }
   else if (LoadCell.getSPS() > 100) {
     Serial.println("!!Sampling rate is higher than specification, check MCU>HX711 wiring and pin designations");
-  }
-  
-  connectToWiFi();  
-  setup_routing();     
-  
+  } 
 }
 
-void loop() {    
-  server.handleClient();     
+void loop() { 
+  server.handleClient();       
+  static boolean newDataReady = 0;
+  if (LoadCell.update()) newDataReady = true;
+  const int serialPrintInterval = 500;
+
+  // get smoothed value from the dataset:
+  if (newDataReady) {
+    if (millis() > t + serialPrintInterval) {
+      float i = LoadCell.getData();
+      weight = i;
+      Serial.print("Load_cell output val: ");
+      Serial.println(i);
+      newDataReady = 0;
+      t = millis();
+    }
+  }
+
+  // receive command from serial terminal, send 't' to initiate tare operation:
+  if (Serial.available() > 0) {
+    char inByte = Serial.read();
+    if (inByte == 't') LoadCell.tareNoDelay();
+  }
+
+ if (LoadCell.getTareStatus() == true) {
+    Serial.println("Tare complete"); if (LoadCell.update()) newDataReady = true;
+  }
+     
 }
