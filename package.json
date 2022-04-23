@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@mongodb-js/charts-embed-dom": "^2.2.0"
+  }
+}
