@@ -33,6 +33,11 @@ def getRoomTempReading(database):
     value = collection.find({"sensorName":"sensor 1"}).sort('timestamp',-1)[0]
     return value['fahrenheit']
 
+def getScaleReading(database):
+    collection = database["Water Level"]
+    value = collection.find().sort('timestamp',-1)[0]
+    return float(value['gallons'])
+
 def get_database():
 
     # Provide the mongodb atlas url to connect python to mongodb using pymongo
