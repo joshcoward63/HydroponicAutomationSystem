@@ -8,14 +8,6 @@ from zeroconf import Zeroconf
 import MDNSListener
 from espServerInterface import*
 from testSchemeBuilder import*
-from databaseConnection import*
-from pymongo import MongoClient
-import pymongo
-import datetime
-CONNECTION_STRING = "mongodb+srv://joshcoward63:Dexter.98@cluster0.sqang.mongodb.net/test"
-mongo_client = MongoClient(CONNECTION_STRING)
-device_database = mongo_client['Devices']
-
 #Creates the client1
 sio = socketio.Client()
 
@@ -33,7 +25,7 @@ while True:
     print("sleeping")
     time.sleep(10)
 
-""" Searches for new devices that come online and add them to the the list """
+
 def checkForNewDevices():
     # zconf = Zeroconf() 
     # serviceListener = MDNSListener.MDNSListener() 
@@ -42,150 +34,138 @@ def checkForNewDevices():
     # zconf.close()
     pass
 
-""" Sends the room temperature to the main server """
+
+""" Gets the temperature reading of the grow room """
+@sio.on("getRoomTemp")
 def sendRoomTemp():
-    roomTemp = getRoomTempReading(device_database)
+    roomTemp = 70
     sio.emit("growRoomTemp", roomTemp)
 
-""" Sends the reservoir water temperature to the main server """
+def sendRoomTemp2():
+    roomTemp = 70
+    sio.emit("growRoomTemp", roomTemp)
+
+""" Gets the temperature reading of the water in the system """
+@sio.on("getWaterTemp")
 def sendWaterTemp():
-    waterTemp = getWaterTempReading(device_database)
+    waterTemp = 70
     sio.emit("waterTemp", waterTemp)
 
-""" Sends the surrounding area temperature to the main server """
+def sendWaterTemp2():
+    waterTemp = 70
+    sio.emit("waterTemp", waterTemp)
+
+""" Gets the temperature reading of the surrounding area """
+@sio.on("getAreaTemp")
 def sendAreaTemp():
-    areaTemp = getAreaTempReading(device_database)
+    areaTemp = 70
+    sio.emit("areaTemp", areaTemp)
+
+def sendAreaTemp2():
+    areaTemp = 70
+    # print(areaTemp)
     sio.emit("getAreaTemp", areaTemp)
 
-""" Sends the pH reading to the main server """
-def sendPH():
-    ph_value = getPHReading(device_database)
-    sio.emit("phSensorReading", ph_value)
-
-""" Sends the Electrical Conductivity reading to the main server """
-def sendEC():
-    ec_value = getECReading(device_database)
-    sio.emit("ecSensorReading", ec_value)
-
-""" Sends the TDS measurement in ppm to the main server """
-def sendTDS():
-    tds_value = getTDSReading(device_database)
-    sio.emit("tdsSensorReading", tds_value)
 
 """ Sends all temperature readings """
 def sendTemperatureReadings():
-    areaTemp = getAreaTempReading(device_database)
-    roomTemp = getRoomTempReading(device_database)
-    waterTemp = getWaterTempReading(device_database)
+    areaTemp = 70
+    roomTemp = 70
+    waterTemp = 70
     sio.emit("getTempReadings", [areaTemp, roomTemp, waterTemp])
 
-""" Turns off the exhaust fan when command sent """
 @sio.on("turnOffExhaustFan")
 def turnOffExhaustFan_():
     turnDeviceOff('Exhaust Fan')
 
-""" Turns on the exhaust fan when command sent """
 @sio.on("turnOnExhaustFan")
 def turnOnExhaustFan_():
     turnDeviceOn("Exhaust Fan")
 
-""" Gets the exhaust fan status when command sent """
 @sio.on("getExhaustStatus")
 def sendExhaustFanStatus():
     print("Getting status")
     status = getExhaustFanState()
     sio.emit("exhaustStatus", status)
 
-""" Turns off the regular fan when command sent """
 @sio.on("turnOffRegularFan")
 def turnOffRegularFan_():
     print("Regular Fan Off")
     turnDeviceOff("Regular Fan")
 
-""" Turns on the regular fan when command sent """
 @sio.on("turnOnRegularFan")
 def turnOnRegularFan_():
     print("Regular Fan On")
     turnDeviceOn("Regular Fan")
 
-""" Gets the regular fan status when command sent """
 @sio.on("getRegularStatus")
 def sendRegularFanStatus():
     status = getRegularFanState()
     sio.emit("regularStatus", status)
 
-""" Turns off the main pump when command sent """
+
 @sio.on("turnOffMainPump")
 def turnOffMainPump_():
     turnDeviceOff("Main Pump")
     print("Main Pump On")
 
-""" Turns on the main pump when command sent """
 @sio.on("turnOnMainPump")
 def turnOnMainPump_():
     print("Main Pump On")
     turnDeviceOn("Main Pump")
 
-""" Gets the main pump status when command sent """
 @sio.on("getMainPumpStatus")
 def sendMainPumpStatus():    
     status = getDeviceState("Main Pump")
     sio.emit("mainPumpStatus", status)
 
-""" Turns off the supply pump when command sent """
 @sio.on("turnOffSupplyPump")
 def turnOffSupplyPump_():
     print("Supply Pump Off")
     turnDeviceOff("Supply Pump")
 
-""" Turns on the supply pump when command sent"""
 @sio.on("turnOnSupplyPump")
 def turnOnSupplyPump_():
     print("Supply Pump On")
     turnDeviceOn("Supply Pump")
 
-""" Gets the supply pump status when command sent """
 @sio.on("getSupplyPumpStatus")
 def sendSupplyPumpStatus():
     status = getDeviceState("Supply Pump")
     sio.emit("supplyPumpStatus", status)
 
-""" Turns on the coresponding nutrient dispensing pump for a set duration when command sent """
 @sio.on("togglePump")
 def togglePump(data):
     pumpName = data[0]
     pumpDuration = int(data[1])
     turnOnPump(pumpName, pumpDuration)
 
-""" Sends a error message to server when device can't connect """
 def errorHandler(device, issue):
     sio.emit("device error", device, issue)
     
 
-""" When the socket connects """
-@sio.event 
+# When the socket connects    
+@sio.event
 def connect():
     print("I'm connected!")
 
-""" When the socket has an error """
+# When the socket has an error
 @sio.event
 def connect_error():
     print("The connection failed!")
 
-""" When the socket disconnects """
+# When the socket disconnects
 @sio.event
 def disconnect():
     print("I'm disconnected!")    
 
-""" Adds new Device to mongodb database """
-def addSensorData():
+def getSensorData():
     for device in devices_list:
         device_info = getDeviceInfo(device)
         addDevice(device_info['sensor'], device)
         print(device_info)
 
-""" Adds sensor reading to mongodb database """
-def addSensorReading():
+def getSensorReading():
     for device in devices_list:
         device_info = getDeviceInfo(device)
         for i in range(0,device_info['quantity']):
@@ -195,7 +175,6 @@ def addSensorReading():
                 addDeviceReading(device_info['sensor'], getDeviceReading(device_info['sensor'], device)['sensor'+str(i+1)], getDeviceReading(device_info['sensor'], device)['value'+str(i+1)], device_info['record-type'])
                 
 
-""" Makes request to server to get value for selected sensor """
 def getDeviceReading(sensor_type, ip_address):
     if sensor_type == "TDS Sensor":
         return getTDSValue(ip_address)
@@ -205,23 +184,25 @@ def getDeviceReading(sensor_type, ip_address):
         return getECValue(ip_address)
     # elif sensor_type == "Temp Humidity Sensor":
     #     return "Temp-humidity-sensors"
+    # elif sensor_type == "Main pump":
+    #     return "Main-pumps"
+    # elif sensor_type == "Supply pump":
+    #     return "Supply-pumps"
     elif sensor_type == "Water Sensor":
         return getTempValues(ip_address)
     # elif sensor_type == "Water Level Sensor":
     #     return "Water-level-sensors"
 
 if __name__ == '__main__':
-    # addSensorData()
+    # getSensorData()
     while True:
-        sendAreaTemp()
-        sendRoomTemp()
-        sendWaterTemp()
-        sendPH()
-        sendEC()
-        sendTDS()
+        print("test")
+        sendAreaTemp2()
+        sendRoomTemp2()
+        sendWaterTemp2()
         # checkForNewDevices()
-        # addSensorData()
-        # addSensorReading()
-        time.sleep(3)
+        # getSensorData()
+        # getSensorReading()
+        time.sleep(30)
         
         

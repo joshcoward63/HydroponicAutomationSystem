@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./Device.css"
 import client from '../../context/socket'
-    client.emit("getExhaustStatus");
-    client.emit("getRegularStatus");
-    client.emit("getMainPumpStatus");
-    client.emit("getSupplyPumpStatus");
+    // client.emit("getExhaustStatus");
+    // client.emit("getRegularStatus");
+    // client.emit("getMainPumpStatus");
+    // client.emit("getSupplyPumpStatus");
 
 
 
@@ -14,7 +14,12 @@ const Device = ({}) =>{
     const [regularState, setRegularState] = useState("Off");
     const [mainPumpState, setMainPumpState] = useState("Off");
     const [supplyPumpState, setSupplyPumpState] = useState("Off");
-
+    useEffect(()=>{
+        client.emit("getExhaustStatus");
+        client.emit("getRegularStatus");
+        client.emit("getMainPumpStatus");
+        client.emit("getSupplyPumpStatus");
+    })
 
     client.on("exhaustStatus", function(status){
         let exhaustFanButton = document.getElementById("b1");

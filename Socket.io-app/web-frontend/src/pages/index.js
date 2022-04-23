@@ -7,6 +7,7 @@ import ECSpeedometer from "../components/SensorDisplay/ECSpeedometer";
 import TDSSpeedometer from "../components/SensorDisplay/TDSSpeedometer";
 import HumiditySpeedometer from "../components/SensorDisplay/HumiditySpeedometer";
 // import LiquidFillGauge from "react-liquid-gauge";
+import "./index.css";
 
 const Home = () => {
  

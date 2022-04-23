@@ -21,7 +21,7 @@ const ECSpeedometer = ({ec_value}) => {
         }}>        
       <ReactSpeedometer style={{}}
               minValue = {0}
-              maxValue = {5000}
+              maxValue = {5}
               width={250}
               height={350}
               ringWidth = {10}

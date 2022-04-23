@@ -3,8 +3,9 @@ from requests import request
 import os.path
 import json
 
+""" This class serves the purpose of finding new devices locally over MDNS"""
 class  MDNSListener:
-
+    """ Adds device ip address to file """
     def append_to_file(self, address):
         listEntry = {"sensor-number": 0, "ip-address": address}
         if os.path.exists("connectedSensors.json"):
@@ -22,7 +23,6 @@ class  MDNSListener:
 
  
     def add_service(self, zeroconf, serviceType, name):
- 
         info = zeroconf.get_service_info(serviceType, name)
         if len(info.properties) >= 1 :
             print("Address: " + str(info.parsed_addresses()))

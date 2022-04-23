@@ -7,9 +7,7 @@ password = "Dexter.98"
 myclient = pymongo.MongoClient("mongodb+srv://joshcoward63:Dexter.98@cluster0.sqang.mongodb.net/test?authSource=admin&replicaSet=atlas-fsz3v6-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true")
 mydb = myclient["Devices"]
 mycol = mydb["Users"]
-# for record in mycol:
-#     print(record)
-# print(mycol.find())
+
 
 
 userDbScheme = {

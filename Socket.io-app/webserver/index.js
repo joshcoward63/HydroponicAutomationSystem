@@ -6,10 +6,8 @@ var app = express();
 
 // console.log(config);
 var serverPort = 5000
-/*Server is listening on port 5000*/
 var server = app.listen(serverPort);
 
-app.use(express.static('public'));
 console.log("Listening on port " + serverPort);
 
 var socket = require('socket.io');
@@ -23,33 +21,28 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
  function newConnection(socket){
  	console.log("new connection: " + socket.id);
-	//   io.to(socket.id).emit("robotInfo", socket.id);
-	//   clients[socket.id] = null;
-	//   console.log(JSON.stringify(clients))
-		socket.emit("testClient");
 
 	socket.on("getAreaTemp", function getAreaTemp(temp){
-		console.log(temp);
 		socket.broadcast.emit("areaTemp",temp);
-	});
-	socket.on("test", function test(temp){
-		console.log(temp);
-		// socket.broadcast.emit("areaTemp",temp);
-	});
+	});;
 
 	socket.on("waterTemp", function getGrowRoomTemp(temp){
 		socket.broadcast.emit("waterTemp",temp);
+		
 	});
 	socket.on("growRoomTemp", function getWaterTemp(temp){
 		socket.broadcast.emit("roomTemp",temp);
 	});
 	socket.on("phSensorReading", function getWaterTemp(phReading){
+		phReading = Math.round((phReading + Number.EPSILON) * 100) / 100;
 		socket.broadcast.emit("phReading",phReading);
 	});
 	socket.on("ecSensorReading", function getECReading(ecReading){
+		ecReading = Math.round((ecReading + Number.EPSILON) * 100) / 100;
 		socket.broadcast.emit("ecReading",ecReading);
 	});
 	socket.on("tdsSensorReading", function getTDSReading(tdsReading){
+		tdsReading = Math.round((tdsReading + Number.EPSILON) * 100) / 100;
 		socket.broadcast.emit("tdsReading",tdsReading);
 	});
 	
@@ -60,22 +53,14 @@ io.sockets.on('connection', newConnection);
 		socket.broadcast.emit("temperatureReadings",aTemp, rTemp, wTemp);	
 		console.log(aTemp);
 	});
-	// socket.on("areaTemp", function postAreaTemp(temp){
 
-	// })
-	// socket.on("waterTemp", function postGrowRoomTemp(temp){
 
-	// })
-	// socket.on("growRoomTemp", function postWaterTemp(temp){
-
-	// })
-
-	socket.on("turnExhaustFanOn", function turnOnExahustFan(){
+	socket.on("turnExhaustFanOn", function turnOnExhaustFan(){
 		socket.broadcast.emit("turnOnExhaustFan");
 		console.log("on");
 	});
 
-	socket.on("turnExhaustFanOff", function turnOffExahustFan(){
+	socket.on("turnExhaustFanOff", function turnOffExhaustFan(){
 		socket.broadcast.emit("turnOffExhaustFan");
 		console.log("off");
 	});

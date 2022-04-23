@@ -1,8 +1,6 @@
 import requests
 import time 
 
-
-
 def getDeviceInfo(ip_address):
     ip_address = "http://" + ip_address
     r = requests.get(ip_address+ "/info")
