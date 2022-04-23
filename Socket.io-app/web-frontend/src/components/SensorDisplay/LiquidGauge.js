@@ -6,7 +6,7 @@ import LiquidFillGauge from 'react-liquid-gauge';
 
 
 
-const LiquidGauge = ({waterLevel}) => {
+const LiquidGauge = ({waterLevel, reservoirSize: reservoirSize}) => {
     
     let val = "Water Level".concat(": ");
     if(waterLevel == null){
@@ -61,7 +61,7 @@ const LiquidGauge = ({waterLevel}) => {
                     style={{ margin: '0 auto' }}
                     width={radius * 2}
                     height={radius * 2}
-                    value={state.value}
+                    value={(state.value/reservoirSize)*100}
                     percent="%"
                     textSize={1}
                     textOffsetX={0}

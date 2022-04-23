@@ -45,6 +45,10 @@ io.sockets.on('connection', newConnection);
 		tdsReading = Math.round((tdsReading + Number.EPSILON) * 100) / 100;
 		socket.broadcast.emit("tdsReading",tdsReading);
 	});
+	socket.on("waterLevelReading", function getWaterLevelReading(waterLevelReading){
+		waterLevelReading = Math.round((waterLevelReading + Number.EPSILON) * 100) / 100;
+		socket.broadcast.emit("waterLevelReading",waterLevelReading);
+	});
 	
 	socket.on("getTempReadings", function getWaterTemp(temps){
 		let aTemp = temps[0];
@@ -135,7 +139,30 @@ io.sockets.on('connection', newConnection);
 	socket.on("togglePump", function togglePump(pump){
 		socket.broadcast.emit("togglePump", pump);
 	})
+~
+	socket.on("areaTemp", function(){
+		socket.broadcast.emit("getAreaTemp");
+	})
+	socket.on("roomTemp", function (){
+		socket.broadcast.emit("getRoomTemp");
+	})
+	socket.on("waterTemp", function (){
+		socket.broadcast.emit("getWaterTemp");
+	})
+	socket.on("waterLevel", function (){
+		socket.broadcast.emit("getWaterLevel");
+	})
+	socket.on("pH", function (){
+		socket.broadcast.emit("getPH");
+	})
+	socket.on("TDS", function (){
+		socket.broadcast.emit("getTDS");
+	})
+	socket.on("EC", function (){
+		socket.broadcast.emit("getEC");
+	})
 
+	
 	socket.on('disconnecting', function(){	
 	    // socket.broadcast.emit("Client disconnected");
 		console.log("client disconnected: ", socket.id);

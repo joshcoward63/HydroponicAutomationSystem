@@ -1,5 +1,5 @@
 import client from "../context/socket"
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Speedometer from "../components/SensorDisplay/Speedometer";
 import LiquidGauge from "../components/SensorDisplay/LiquidGauge";
 import PhSpeedometer from "../components/SensorDisplay/PhSpeedometer";
@@ -20,7 +20,15 @@ const Home = () => {
   const [waterLevelReading, setWaterLevelReading] = useState(null); 
   const [humidityReading, setHumidityReading] = useState(null); 
 
-
+  useEffect(()=>{
+    client.emit("areaTemp");
+    client.emit("roomTemp");
+    client.emit("waterTemp");
+    client.emit("pH");
+    client.emit("TDS");
+    client.emit("EC");
+    client.emit("waterLevel");
+  })
 
   client.on("temperatureReadings", function(aTemp, rTemp, wTemp ){   
     setAreaTemp(aTemp);
@@ -104,7 +112,7 @@ const Home = () => {
         paddingBottom: '-10%'
       }}>
       <HumiditySpeedometer humidity_value={humidityReading} />  
-      <LiquidGauge  waterLevel={waterLevelReading}/>
+      <LiquidGauge  waterLevel={waterLevelReading} reservoirSize={25}/>
 
       </div>
     </div>   

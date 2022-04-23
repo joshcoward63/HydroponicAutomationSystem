@@ -21,8 +21,9 @@ sio = socketio.Client()
 
 server_ip = "http://" + "192.168.0.89" + ":" +"5000"
 
-devices_list = ['192.168.0.201']
-# devices_list = ['192.168.0.214', '192.168.0.219', '192.168.0.46']
+
+# devices_list = ['192.168.0.201','192.168.0.46] pH/EC respectively 
+devices_list = ['192.168.0.214', '192.168.0.219']
 #Connects to server
 while True:
     try:
@@ -42,35 +43,77 @@ def checkForNewDevices():
     # zconf.close()
     pass
 
+
+@sio.on("getRoomTemp")
+def sendRoomTempRequested():
+    roomTemp = getRoomTempReading(device_database)
+    sio.emit("growRoomTemp", roomTemp)
+
 """ Sends the room temperature to the main server """
 def sendRoomTemp():
     roomTemp = getRoomTempReading(device_database)
     sio.emit("growRoomTemp", roomTemp)
+
+@sio.on("getWaterTemp")
+def sendWaterTempRequested():
+    waterTemp = getWaterTempReading(device_database)
+    sio.emit("waterTemp", waterTemp)
 
 """ Sends the reservoir water temperature to the main server """
 def sendWaterTemp():
     waterTemp = getWaterTempReading(device_database)
     sio.emit("waterTemp", waterTemp)
 
+@sio.on("getAreaTemp")
+def sendAreaTempRequested():
+    areaTemp = getRoomTempReading(device_database)
+    sio.emit("getAreaTemp", areaTemp)
+
 """ Sends the surrounding area temperature to the main server """
 def sendAreaTemp():
     areaTemp = getAreaTempReading(device_database)
     sio.emit("getAreaTemp", areaTemp)
+
+@sio.on("getPH")
+def sendPHRequested():
+    ph_value = getPHReading(device_database)
+    sio.emit("phSensorReading", ph_value)
 
 """ Sends the pH reading to the main server """
 def sendPH():
     ph_value = getPHReading(device_database)
     sio.emit("phSensorReading", ph_value)
 
+@sio.on("getEC")
+def sendECRequested():
+    ec_value = getECReading(device_database)
+    sio.emit("ecSensorReading", ec_value)
+
 """ Sends the Electrical Conductivity reading to the main server """
 def sendEC():
     ec_value = getECReading(device_database)
     sio.emit("ecSensorReading", ec_value)
 
+@sio.on("getTDS")
+def sendTDSRequested():
+    tds_value = getTDSReading(device_database)
+    sio.emit("tdsSensorReading", tds_value)
+
 """ Sends the TDS measurement in ppm to the main server """
 def sendTDS():
     tds_value = getTDSReading(device_database)
     sio.emit("tdsSensorReading", tds_value)
+
+@sio.on("getWaterLevel")
+def sendScaleRequested():
+    print("lajcak")
+    scale_value = getScaleReading(device_database)
+    sio.emit("waterLevelReading", scale_value)
+
+""" Sends the Scale measurement in gallons to the main server """
+def sendScale():
+    scale_value = getScaleReading(device_database)
+    sio.emit("waterLevelReading", scale_value)
 
 """ Sends all temperature readings """
 def sendTemperatureReadings():
@@ -219,9 +262,10 @@ if __name__ == '__main__':
         sendPH()
         sendEC()
         sendTDS()
+        sendScale()
         # checkForNewDevices()
         # addSensorData()
-        # addSensorReading()
-        time.sleep(3)
+        addSensorReading()
+        time.sleep(30*60)
         
         
