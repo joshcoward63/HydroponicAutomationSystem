@@ -8,102 +8,6 @@ myclient = pymongo.MongoClient("mongodb+srv://joshcoward63:Dexter.98@cluster0.sq
 mydb = myclient["Devices"]
 mycol = mydb["Users"]
 
-
-
-userDbScheme = {
-    "userId": "1",
-    "username": 'joshcoward63',
-    "password": "dexter98",
-    "Sensors": {
-        "Water-temp-sensors":{
-            "0": {
-                "id": "1312ssad031saasddsa209",
-                "IP": "192.168.0.198",
-                "group": None
-            },
-            "1": {
-                "id": "1312ssad031saasddsa209",
-                "IP": "192.168.0.198",
-                "group": None
-            },
-            "2": {
-                "id": "1312ssad031saasddsa209",
-                "IP": "192.168.0.198",
-                "group": None
-            }
-        },
-        "Temp-humidity-sensors":{
-
-        },
-        "PH-sensors":{
-
-        },
-        "EC-sensors":{
-            
-        },
-        "TDS-sensors":{
-
-        },
-        "Water-level-sensors":{
-
-        },
-    },
-    "Devices": {
-        "Main-pumps":{
-            '0' :{
-                "status": "off",
-                "group": 1
-            }
-        },
-        "Supply-pumps":{
-            "0" :{
-                "status": "off",
-                "group": 1
-            }
-        }
-    }
-}
-
-waterTempScheme = {
-    "username": "joshcoward63",
-    "userId": "624f6f4713b921665ed369bd",
-    "sensors":{
-        "0": {
-            "temperature": 72.01
-        },
-        "1": {
-            "temperature": 73.4
-        },
-        "2": {
-            "temperature": 72.2
-        }
-    },
-    "timestamp": datetime.datetime.utcnow()
-
-}
-
-tempHumidityReadingEntry = {}
-
-phReadingEntry = {}
-
-ecReadingEntry = {}
-
-tdsReadingEntry = {"username": "joshcoward63",
-    "userId": "624f6f4713b921665ed369bd",
-    "sensors":{
-        "0": {
-            "temperature": 72.01
-        },
-        "1": {
-            "temperature": 73.4
-        },
-        "2": {
-            "temperature": 72.2
-        }
-    },
-    "timestamp": datetime.datetime.utcnow()}
-
-
 def getDeviceType(sensor_type):
     if sensor_type == "TDS Sensor":
         return "TDS-sensors"
@@ -136,14 +40,15 @@ def getDeviceTableName(sensor_type):
     elif sensor_type == "Water Level":
         return "Water Level"
 
-
+""" Adds device to current user """
 def addDevice(sensor_type,  ipAddress):
     userTable = mydb['Users']
     type_ = getDeviceType(sensor_type)
     userTable.update_one({'_id':'624f6f4713b921665ed369bd'}, {"$push":{"Sensors": {type_: {str(0):{"ip-address":ipAddress, "group": 0}}}}})
     # Check if user exists 
-    print("yup")
+    # print("yup")
 
+""" Adds Device reading to current user under its respective table """
 def addDeviceReading(sensor_type, sensor_name, record, record_type):
     tableName = getDeviceTableName(sensor_type)
     sensorTable = mydb[tableName]
@@ -158,13 +63,5 @@ def addDeviceReading(sensor_type, sensor_name, record, record_type):
     entry["timestamp"] = datetime.datetime.utcnow()
     
     sensorTable.insert_one(entry)
-    print("done")
+    # print("done")
         
-        
-
-# waterLevelEntry = {}
-
-# mycol.insert_one(userDbScheme)
-
-# waterTemp_collection = mydb["Water Temp"]
-# waterTemp_collection.insert_one(waterTempScheme)

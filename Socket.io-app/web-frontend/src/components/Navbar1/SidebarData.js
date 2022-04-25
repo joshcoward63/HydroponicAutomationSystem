@@ -22,12 +22,12 @@ export const SidebarData = [
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text'
   },
-  {
-    title: 'DeviceManager',
-    path: '/deviceManager',
-    icon: <IoIcons.IoMdPeople />,
-    cName: 'nav-text'
-  },
+  // {
+  //   title: 'DeviceManager',
+  //   path: '/deviceManager',
+  //   icon: <IoIcons.IoMdPeople />,
+  //   cName: 'nav-text'
+  // },
   {
     title: 'About',
     path: '/about',

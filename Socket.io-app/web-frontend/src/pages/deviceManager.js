@@ -4,13 +4,15 @@ const DeviceManager = () => {
   return (
     <div
       style={{
-        display: 'flex',
+        display: 'block',
+        position: 'absolute',
+        zIndex: '2',
         justifyContent: 'center',
         alignItems: 'center',
         height: '90vh'
       }}
     >
-      <h1>Sign Up</h1>
+      <h1>Regiter</h1>
       <p>test sadskladjasldals;;</p>
     </div>
   );

@@ -11,8 +11,6 @@ const Card = ({data, cardIndex}) => {
         {data[cardIndex].map(item => (
         <div className='card'>
                 {item}
-            {/* <p>{item.title} </p>
-             <p>{item.name}</p>  */}
         </div>
         ))}
         </div>

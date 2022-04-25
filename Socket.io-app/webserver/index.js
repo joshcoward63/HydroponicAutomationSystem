@@ -1,10 +1,8 @@
-;/*This file creates a Nodejs server that listens for command from Misty Client and frontend Web Client*/
-const { Console, countReset } = require('console');
+;/*This file creates a Nodejs server that listens for commands and data being streamed
+ between the Device Controller and the Frontend UI Display*/
 var express = require('express');
-const { stat } = require('fs');
 var app = express();
 
-// console.log(config);
 var serverPort = 5000
 var server = app.listen(serverPort);
 
@@ -21,6 +19,8 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
  function newConnection(socket){
  	console.log("new connection: " + socket.id);
+
+	// The following is from the Device Controller to the UI 
 
 	socket.on("getAreaTemp", function getAreaTemp(temp){
 		socket.broadcast.emit("areaTemp",temp);
@@ -58,7 +58,7 @@ io.sockets.on('connection', newConnection);
 		console.log(aTemp);
 	});
 
-
+	// The following is from the UI to the Device Controller
 	socket.on("turnExhaustFanOn", function turnOnExhaustFan(){
 		socket.broadcast.emit("turnOnExhaustFan");
 		console.log("on");
@@ -96,7 +96,6 @@ io.sockets.on('connection', newConnection);
 		socket.broadcast.emit("turnOffSupplyPump");
 		console.log("off");
 	});
-	//Status
 
 	socket.on("getRegularStatus", function getRegularStatus(){
 		socket.broadcast.emit("getRegularStatus");
@@ -139,7 +138,8 @@ io.sockets.on('connection', newConnection);
 	socket.on("togglePump", function togglePump(pump){
 		socket.broadcast.emit("togglePump", pump);
 	})
-~
+	
+
 	socket.on("areaTemp", function(){
 		socket.broadcast.emit("getAreaTemp");
 	})

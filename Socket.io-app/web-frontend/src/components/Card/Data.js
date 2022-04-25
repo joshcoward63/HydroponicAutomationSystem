@@ -24,5 +24,12 @@ export default[
         <Device/>
     </div>
     ],
-    [<div>teosaki</div>]
+    [<div style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: '#edefea'
+
+    }}>
+        {/* <h1>Device Controller Status: {{connectionStatus}} </h1> */}
+    </div>]
 ];

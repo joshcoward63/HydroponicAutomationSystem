@@ -32,6 +32,9 @@ class  MDNSListener:
             print("Properties: " + str(info.properties)) 
             self.append_to_file(info.parsed_addresses())
  
+
+#The following is for testing in isolation
+
 # zconf = Zeroconf()
  
 # serviceListener = MDNSListener()

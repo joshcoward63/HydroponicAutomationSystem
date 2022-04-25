@@ -1,3 +1,8 @@
+"""
+    This file is used for interacting with the HomeBridge API, this is so I can use
+    smart wifi outlets to turn devices on/off. 
+"""
+
 from email import header
 from re import A
 from webbrowser import get
@@ -9,19 +14,17 @@ global headers
 global devices
 
 
-
+""" Login to HomeBridge """
 def homebridgeLogin():
     json = {
         "username": "admin", 
         "password": 'admin'
     }
     r = requests.post("http://192.168.0.18:8581/api/auth/login", json=json)
-    # print(r.status_code)
     if(r.status_code != 201):
         print("Homebridge login request failed with status code ",r.status_code,"\n") 
     else:
         bearer_token = r.json()['access_token']
-        # print(bearer_token)
         return bearer_token
 
 def restartHombridge():
@@ -31,7 +34,6 @@ def restartHombridge():
 
 def getAccessories():
     r = requests.get("http://192.168.0.18:8581/api/accessories", headers=headers)
-    # print(r.json())
 
 def getAccessoriesLayout():
     r = requests.get("http://192.168.0.18:8581/api/accessories/layout", headers=headers)
@@ -43,8 +45,6 @@ def getAccessoriesLayout():
         except:
             pass
     return devices
-
-
 
 def turnOnExhaustFan():
     id = devices["Exhaust Fan"]    

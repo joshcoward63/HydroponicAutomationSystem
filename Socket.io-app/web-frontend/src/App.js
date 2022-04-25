@@ -16,7 +16,7 @@ function App() {
         <Route path='/' exact element={<Home/>} />
         <Route path='/program' element={<Program/>} />
         <Route path='/Records' element={<Records/>} />
-        <Route path='/device-manager' element={<DeviceManager/>} />
+        {/* <Route path='/device-manager' element={<DeviceManager/>} /> */}
         <Route path='/about' element={<About/>} />
       </Routes>
     </Router>
