@@ -11,7 +11,7 @@
 //#include <ESPAsyncWebServer.h>
 
 // Data wire is connected to GPIO 15
-#define ONE_WIRE_BUS 15
+#define ONE_WIRE_BUS 33
 
 // Setup a oneWire instance to communicate with any OneWire devices
 OneWire oneWire(ONE_WIRE_BUS);
