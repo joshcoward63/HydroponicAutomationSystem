@@ -62,3 +62,11 @@ At this point all the clients should be connected to the server and if any devic
 ![Manual Program Page](Screenshots/ManualProgram.png)
 
 ![Records Page](Screenshots/Records.png)
+
+### Sensors 
+
+![EC and TDS Sensors](Screenshots/IMG_6453.jpg)
+
+### Garden
+
+![Garden Picture](Screenshots/IMG_6470.jpg)
