@@ -3,6 +3,7 @@
     smart wifi outlets to turn devices on/off. 
 """
 
+from asyncio import exceptions
 from email import header
 from re import A
 from webbrowser import get
@@ -27,10 +28,12 @@ def homebridgeLogin():
         bearer_token = r.json()['access_token']
         return bearer_token
 
-def restartHombridge():
+def restartHomebridge():
     r = requests.put("http://192.168.0.18:8581/api/server/restart", headers=headers)
     if r.status_code != 200:
         print("Unable to restart Homebridge, status code: " + r.status_code)
+    else:
+        print("Restarted Homebridge")
 
 def getAccessories():
     r = requests.get("http://192.168.0.18:8581/api/accessories", headers=headers)
@@ -95,7 +98,10 @@ def getExhaustFanState():
     id = devices["Exhaust Fan"]
     url = "http://192.168.0.18:8581/api/accessories/" + id
     r = requests.get(url, headers=headers)
-    fan_state =r.json()['serviceCharacteristics'][0]['value']
+    try:
+        fan_state =r.json()['serviceCharacteristics'][0]['value']
+    except:
+        restartHomebridge()
     if r.status_code != 200:
         print('Unable to make request to turn on fan status code: ' + r.status_code)
         return
@@ -160,5 +166,5 @@ def getDeviceState(device_name):
 bearer_token = homebridgeLogin()
 headers = {"Authorization": 'Bearer ' + bearer_token}
 # time.sleep(10)
-# restartHombridge()
+# restartHomebridge()
 devices = getAccessoriesLayout()
