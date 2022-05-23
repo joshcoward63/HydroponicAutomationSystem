@@ -24,6 +24,7 @@ server_ip = "http://" + "192.168.0.89" + ":" +"5000"
 
 # devices_list = ['192.168.0.201','192.168.0.46] pH/EC respectively 
 devices_list = ['192.168.0.214', '192.168.0.219']
+# devices_list = ['192.168.0.214']
 #Connects to server
 while True:
     try:
@@ -232,7 +233,9 @@ def addSensorReading():
     for device in devices_list:
         device_info = getDeviceInfo(device)
         for i in range(0,device_info['quantity']):
+            # print(device_info)
             if i == 0 and device_info['quantity'] == 1:
+                # print("kjdaodaj")
                 addDeviceReading(device_info['sensor'], None, getDeviceReading(device_info['sensor'],device)['value'], device_info['record-type'])
             else:
                 addDeviceReading(device_info['sensor'], getDeviceReading(device_info['sensor'], device)['sensor'+str(i+1)], getDeviceReading(device_info['sensor'], device)['value'+str(i+1)], device_info['record-type'])
@@ -265,6 +268,7 @@ if __name__ == '__main__':
         sendScale()
         # checkForNewDevices()
         # addSensorData()
+        # print("kjdak")
         addSensorReading()
         time.sleep(30*60)
         
